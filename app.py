@@ -13,7 +13,8 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
+client = MongoClient('localhost', 27017)
+#client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
 db = client.dbproject1
 
 #route start
@@ -30,9 +31,9 @@ def home():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
-# 로그인
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
+    # 로그인
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
 
@@ -44,12 +45,17 @@ def sign_in():
          'id': username_receive,
          'exp': datetime.utcnow() + timedelta(seconds=60 * 60)  # 로그인 1시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
+@app.route('/login')
+def login():
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
 
 
 #회원가입
@@ -76,7 +82,5 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-'''
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-'''
