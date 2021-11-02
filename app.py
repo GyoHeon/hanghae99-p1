@@ -52,6 +52,7 @@ def sign_in():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
+
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
@@ -75,12 +76,20 @@ def sign_up():
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
 
+
 # 중복확인
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
+
+
+@app.route('/review_chall', method=['POST'])
+def comment():
+    username_receive = request.form['username_give']
+    chall_receive = request.form['chall_give']
+    comment_receive = request.form['comment_give']
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
