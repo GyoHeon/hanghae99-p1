@@ -60,26 +60,30 @@
     <p class="box-text">작심삼일은 이제그만!</p>
 </div>
 <div class="card">
-    <div class="card-wrap">
-        <div class="card-image">
-            <figure class="image is-4by3">
-                <img src="#" alt="Placeholder image">
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">(이벤트)-운동하기</p>
-                    <p class="subtitle is-6">성공하자!</p>
+    <div class="card-wrap detail_page">
+        <a href="Detail.html">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="https://dsfjpb8zhc170.cloudfront.net/store/thumbnails/59b4cb5786664db6b1280a8cdfe6d64e.jpg"
+                         alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">매주 0.5Kg 감량하기</p>
+                        <p class="subtitle is-6">공식 챌린지</p>
+                    </div>
+                </div>
+                <div class="content">
+                    간단설명: 4주일 동안 매주 0.5Kg 감량하기
+                    <br>
+                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
                 </div>
             </div>
-            <div class="content">
-                간단설명: 스트레칭하기
-                <p><a href="#">상세페이지 가기</a></p>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-        </div>
+        </a>
     </div>
+
     <div class="card-wrap">
         <div class="card-image">
             <figure class="image is-4by3">
@@ -166,35 +170,47 @@
     * {
         font-family: 'Gothic A1', sans-serif;
     }
+
     a {
         font-size: 18px;
     }
+
     .navbar-logo {
         margin-top: 7px;
         width: 150px;
         height: 100px;
     }
+
     .panel-tabs {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-evenly;
     }
+
     .card-image {
         margin: 20px;
         width: 400px;
         height: 300px;
         background-color: beige;
     }
+
     .box-text {
         text-align: center;
         font-size: 30px;
         font-weight: bolder;
         color: darkblue;
     }
+
     .card-wrap {
         margin: 40px 0px 0px 35px;
+        transition: transform .3s;
     }
+
+    .card-wrap:hover {
+        transform: scale(1.3)
+    }
+
     .card {
         margin: 60px;
         display: flex;
@@ -202,5 +218,6 @@
         align-content: flex-start;
         flex-wrap: wrap;
     }
+
 </style>
 </html>
