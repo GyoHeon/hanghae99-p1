@@ -20,4 +20,4 @@
 ---
 API
 
-![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcoPtSc%2FbtrjCJSDqy8%2FmPrKF7t610PPGauEcVN9gK%2Fimg.png)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9f84g%2FbtrjD2L2wo3%2FN3hqsb2pQDKpQri9v47Vxk%2Fimg.png)
