@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
-#SECRET_KEY = 'SPARTA'
+SECRET_KEY = 'SPARTA'
 
 client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
 db = client.dbproject1
