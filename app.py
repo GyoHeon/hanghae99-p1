@@ -51,6 +51,19 @@ def sign_in():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
+#마이프로필 렌더링 코드
+@app.route('/user/<username>')   # href="/user/{{ user_info.username }}으로 마이프로필과 연결
+def user(username):
+    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+
+        user_info = db.users.find_one({"username": username}, {"_id": False})
+        return render_template('user.html', user_info=user_info, status=status)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 #회원가입
 @app.route('/sign_up/save', methods=['POST'])
@@ -76,7 +89,7 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-'''
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
 '''
