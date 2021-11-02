@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 #SECRET_KEY = 'SPARTA'
 
-#client = MongoClient('localhost', 27017)      #로컬에서 사용
+#client = MongoClient('localhost', 27017)
 #db = client.dbsparta
 
 #route start
@@ -97,9 +97,7 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
 '''
 if __name__ == '__main__':
     app.run('0.0.0.0', port=8000, debug=True)
 '''
->>>>>>> 601e59dc8821093d58882417a8c3c034a5bb15b8
