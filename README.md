@@ -1,5 +1,5 @@
 # hanghae99-p1
-first project-mini project
+
 ---
 팀원
 * 이교헌
