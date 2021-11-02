@@ -14,9 +14,47 @@
 
 </head>
 <script>
+    $(document).ready(function () {
+        get_text()
+    })
 
     function shot_report() {
+        alert("'매주 0.5Kg 감량하기'에 정말 참가하시겠습니까?'")
         $("#shot_challenge").toggleClass("is-hidden")
+        $("#btn-hide").hide()
+    }
+
+    function post_text() {
+        let chall = $("#chall_text").val()
+        $.ajax({
+            type: "POST",
+            url: "/my_chall",
+            data: {
+                chall_give: chall,
+                user_name_give: user_name,
+
+            },
+            success: function (response) {
+                alert("인증 글이 등록되었습니다.")
+
+            }
+        });
+    }
+
+    function get_text() {
+        let chall = $("#chall_text").val()
+        let html_temp = `<h1>인증 글: ${chall}  </h1>`
+        $("#mychall").append(html_temp)
+
+
+        $.ajax({
+            type: "GET",
+            url: "/my_chall",
+            data: {},
+            success: function (response) {
+                console.log(response)
+            }
+        })
     }
 </script>
 <body>
@@ -41,14 +79,6 @@
                     </span>
                 </p>
 
-                <div class="buttons">
-                    <a style="margin-left: 30px" class="button is-primary">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light">
-                        Log in
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -79,7 +109,9 @@
             <h1>매주 0.5Kg 감량하기</h1>
             <p>공식 챌린지</p>
             <P>참가 인원 : 00 명</P>
-            <button onclick="shot_report()" class="button is-primary">참가하기</button>
+            <div id="btn-hide">
+                <button onclick="shot_report()" class="button is-primary">참가하기</button>
+            </div>
         </div>
 
     </div>
@@ -89,15 +121,20 @@
             4주일 동안 주 1일, 하루에 인증샷을 1번 찍어야해요!
             체중계 위에서 몸무게 사진을 찍고 인증을 해주세요~
         </div>
+        <div id="mychall">
+
+        </div>
+
     </div>
+
     <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
-        <button class="button is-primary">등록</button>
-        <textarea class="textarea is-primary" placeholder="Primary textarea"></textarea>
+        <button class="button is-primary" onclick="get_text()">등록</button>
+        <textarea id="chall_text" class="textarea is-primary" placeholder="챌린지 인증글을 남겨주세요"></textarea>
     </div>
-
-
 </div>
+
+
 </body>
 <style>
     * {
@@ -163,16 +200,6 @@
     .shot {
         margin: 30px;
 
-    }
-
-
-    .shot-pic {
-        height: 250px;
-        width: 250px;
-        background-color: beige;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
     }
 
 
