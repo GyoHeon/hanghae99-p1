@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!-- Webpage Title -->
-    <title>Log In | SWEETER</title>
+    <title>Log In | Dr.Challenge</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -21,16 +21,6 @@
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400&family=Nanum+Brush+Script&display=swap"
-      rel="stylesheet"
-    />
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
     <style>
       body {
         background-color: RGBA(232, 52, 78, 0.2);
@@ -46,14 +36,10 @@
       .title {
         font-weight: 800;
         font-size: 5rem;
-        font-family: "Gothic A1", sans-serif;
-        font-family: "Nanum Brush Script", cursive;
       }
 
       .subtitle {
         font-size: 2rem;
-        font-family: "Gothic A1", sans-serif;
-        font-family: "Nanum Brush Script", cursive;
       }
 
       .is-sparta {
@@ -76,27 +62,45 @@
         color: gray;
       }
     </style>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <script>
       // {% if msg %}
       //     alert("{{ msg }}")
       // {% endif %}
       function sign_in() {
+        let username = $("#input-username").val();
+        let password = $("#input-password").val();
+
+        if (username == "") {
+          $("#help-id-login").text("아이디를 입력해주세요.");
+          $("#input-username").focus();
+          return;
+        } else {
+          $("#help-id-login").text("");
+        }
+
+        if (password == "") {
+          $("#help-password-login").text("비밀번호를 입력해주세요.");
+          $("#input-password").focus();
+          return;
+        } else {
+          $("#help-password-login").text("");
+        }
         $.ajax({
           type: "POST",
           url: "/sign_in",
           data: {
-            username_give: "",
-            password_give: "",
+            username_give: username,
+            password_give: password,
           },
           success: function (response) {
             if (response["result"] == "success") {
               $.cookie("mytoken", response["token"], { path: "/" });
-
-              alert("로그인 완료!");
-              window.location.href = "/";
+              window.location.replace("/");
             } else {
-              // 로그인이 안되면 에러메시지를 띄웁니다.
               alert(response["msg"]);
             }
           },
@@ -173,15 +177,6 @@
         });
       }
 
-      function toggle_sign_up() {
-        $("#sign-up-box").toggleClass("is-hidden");
-        $("#div-sign-in-or-up").toggleClass("is-hidden");
-        $("#btn-check-dup").toggleClass("is-hidden");
-        $("#help-id").toggleClass("is-hidden");
-        $("#help-password").toggleClass("is-hidden");
-        $("#help-password2").toggleClass("is-hidden");
-      }
-
       function is_nickname(asValue) {
         var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
         return regExp.test(asValue);
@@ -237,6 +232,15 @@
           },
         });
       }
+
+      function toggle_sign_up() {
+        $("#sign-up-box").toggleClass("is-hidden");
+        $("#div-sign-in-or-up").toggleClass("is-hidden");
+        $("#btn-check-dup").toggleClass("is-hidden");
+        $("#help-id").toggleClass("is-hidden");
+        $("#help-password").toggleClass("is-hidden");
+        $("#help-password2").toggleClass("is-hidden");
+      }
     </script>
   </head>
   <body>
@@ -247,7 +251,7 @@
       >
         <h1 class="title is-sparta">Dr.Challenge</h1>
         <h3 class="subtitle is-sparta">
-          끝까지 버티는 습관이 승리하는 습관이다!
+          끝까지 버티는 습관이 승리하는 습관이다.
         </h3>
       </div>
     </section>
