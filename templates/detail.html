@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dr. Challenge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="path/to/font-awesome/css/font-awesome.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  </head>
+  <script>
+    function shot_report() {
+      alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
+      $("#shot_challenge").toggleClass("is-hidden");
+      $("#btn-hide").hide();
+    }
+
+    function get_text() {
+      let chall = $("#chall_text").val();
+      if (chall == "") {
+        alert("인증글을 남겨주세요");
+        return;
+      }
+      let html_temp = `<h1>인증: ${chall}  </h1>`;
+      $("#mychall").append(html_temp);
+
+      $.ajax({
+        type: "GET",
+        url: "/my_chall",
+        data: {},
+        success: function (response) {
+          console.log(response);
+        },
+      });
+    }
+  </script>
+  <body>
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-logo" href="#">
+          <img src="/challenge.jpg" width="112" height="120" />
+        </a>
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            <p style="font-size: 30px; font-weight: bolder; color: darkblue">
+              Dr. CHALLENGE
+            </p>
+          </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class="control has-icons-right">
+              <input class="input" placeholder="Search" />
+              <span class="icon is-small is-right"> </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav class="panel">
+      <p class="panel-tabs">
+        <a class="is-active">전체</a>
+        <a>다이어트</a>
+        <a>운동</a>
+        <a>공부</a>
+        <a>독서</a>
+        <a>돈관리</a>
+        <a>취미</a>
+        <a>생활습관</a>
+        <a>돌봄</a>
+      </p>
+    </nav>
+    <div class="card">
+      <div class="card-title">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img
+              class="challenge-image"
+              src="{{ img }}"
+              alt="Placeholder image"
+            />
+          </figure>
+        </div>
+        <div class="title-text">
+          <h1>{{ title }}</h1>
+          <p>공식 챌린지</p>
+          <p>참가 인원 : 00 명</p>
+          <div id="btn-hide">
+            <button onclick="shot_report()" class="button is-primary">
+              참가하기
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <h1>챌린지 설명</h1>
+        <div class="content" id="mychall">{{ desc }}</div>
+      </div>
+
+      <div class="shot is-hidden" id="shot_challenge">
+        <h1>챌린지 인증하기</h1>
+        <button class="button is-primary" onclick="get_text()">등록</button>
+        <textarea
+          id="chall_text"
+          class="textarea is-primary"
+          placeholder="챌린지 인증글을 남겨주세요"
+        ></textarea>
+      </div>
+    </div>
+  </body>
+  <style>
+    * {
+      font-family: "Gothic A1", sans-serif;
+    }
+
+    a {
+      font-size: 18px;
+    }
+
+    .navbar-logo {
+      margin-top: 7px;
+      width: 150px;
+      height: 100px;
+    }
+
+    .panel-tabs {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .card {
+      height: 550px;
+      width: 1000px;
+      margin: 70px auto;
+    }
+
+    .card-title {
+      display: flex;
+      flex-direction: row;
+      margin: 20px auto;
+      width: 900px;
+    }
+
+    .image {
+      height: 300px;
+      width: 500px;
+      border-radius: 30px;
+      margin-top: 20px;
+    }
+
+    .challenge-image {
+      border-radius: 30px;
+      background-position: initial;
+    }
+
+    .title-text {
+      margin: 100px 0 0 30px;
+    }
+
+    h1 {
+      font-weight: bold;
+      font-size: 25px;
+    }
+
+    .button {
+      margin-top: 20px;
+    }
+
+    .shot {
+      margin: 30px;
+    }
+  </style>
+</html>
