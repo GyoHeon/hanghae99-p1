@@ -24,7 +24,8 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username":payload["id"]})
-        return render_template('index.html', user_info=user_info)
+        challenges = list(db.chall.find({}, {"_id": False}))
+        return render_template('index.html', user_info=user_info, challenges=challenges)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -39,7 +40,7 @@ def sign_in():
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
-
+    print(result)
     if result is not None:
         payload = {
          'id': username_receive,
