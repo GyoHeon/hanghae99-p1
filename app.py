@@ -88,7 +88,7 @@ def check_dup():
 
 '''
 # 상세페이지 - 이교헌
-@app.route('/detail/load', method=['GET'])
+@app.route('/detail', method=['GET'])
 def detail_load():
     title_receive = request.form['title_give']
     challenge = db.chall.find_one({"title": title_receive})
