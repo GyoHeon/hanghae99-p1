@@ -1,6 +1,7 @@
 body {
   background-color: rgba(147, 190, 236, 0.5);
   min-height: 100vh;
+  height: auto;
   color: black;
 }
 
@@ -103,13 +104,10 @@ a {
   align-content: flex-start;
   flex-wrap: wrap;
   background-color: rgba(147, 190, 235, 0.8);
-  height: 90vh;
+  height: auto;
   border-radius: 10px;
 }
-.detail-img {
-  width: 500px;
-  height: 500px;
-}
+
 .index-img {
   width: 250px;
   height: 250px;
@@ -124,4 +122,44 @@ a {
 }
 .chall-desc {
   width: 230px;
+}
+.detail-title {
+  display: flex;
+  width: 100%;
+}
+.detail-div {
+  display: flex;
+  flex-direction: column;
+}
+.detail-img {
+  width: 400px;
+  height: 400px;
+  margin: 50px;
+  margin-left: 100px;
+  border: 5px white solid;
+  border-radius: 20px;
+}
+.detail-desc {
+  margin: 50px;
+  padding-left: 50px;
+  font-size: 20px;
+}
+.detail-people {
+  margin: 40px;
+  font-size: 20px;
+  padding-top: 140px;
+}
+.detail-div h1 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+.detail-div p {
+  margin: 10px;
+}
+#shot_challenge {
+  margin: 100px;
+}
+.entrance-btn {
+  color: black;
 }

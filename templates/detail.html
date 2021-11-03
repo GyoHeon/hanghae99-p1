@@ -18,13 +18,14 @@
       rel="stylesheet"
       href="path/to/font-awesome/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script
       src="https://kit.fontawesome.com/8c9eb7dad1.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="/static/style.css?afterb" type="text/css" />
   </head>
   <script>
     function shot_report() {
@@ -84,14 +85,12 @@
         </div>
       </div>
     </nav>
-    <div class="card">
-      <div class="card-title">
-        <div class="card-image">
-          <figure class="detail-img">
-            <img class="detail-img" src="{{ img }}" alt="Placeholder image" />
-          </figure>
-        </div>
-        <div class="title-text">
+    <div class="card detail-div">
+      <div class="detail-title">
+        <figure>
+          <img src="{{ img }}" alt="Placeholder image" class="detail-img" />
+        </figure>
+        <div class="title-text detail-people">
           <h1>{{ title }}</h1>
           <p>공식 챌린지</p>
           <p>참가 인원 : 00 명</p>
@@ -102,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="card-content">
+      <div class="detail-desc">
         <h1>챌린지 설명</h1>
         <div class="content" id="mychall">{{ desc }}</div>
       </div>
