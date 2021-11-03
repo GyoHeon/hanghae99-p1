@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dr. Challenge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,16 +25,32 @@
       src="https://kit.fontawesome.com/8c9eb7dad1.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="/static/style.css?afterb" type="text/css" />
+    <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
   </head>
   <script>
     function shot_report() {
-      alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
-      $("#shot_challenge").toggleClass("is-hidden");
-      $("#btn-hide").hide();
+        alert("'매주 0.5Kg 감량하기'에 정말 참가하시겠습니까?'")
+        $("#shot_challenge").toggleClass("is-hidden")
+        $("#btn-hide").hide()
+    }
+
+    function post_text() {
+        let chall = $("#chall_text").val()
+        $.ajax({
+            type: "POST",
+            url: "/my_chall",
+            data: {
+                chall_give: chall,
+                user_name_give: user_name,
+            },
+            success: function (response) {
+                alert("인증 글이 등록되었습니다.")
+            }
+        });
     }
 
     function get_text() {
+
       let chall = $("#chall_text").val();
       if (chall == "") {
         alert("인증글을 남겨주세요");
@@ -63,9 +79,10 @@
       <div class="navbar-brand">
         <a class="navbar-logo" href="#">
           <i class="fas fa-user-md"></i>
+
         </a>
-      </div>
-      <div id="navbarBasicExample" class="navbar-menu">
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="/">
             <p
@@ -109,15 +126,10 @@
         <div class="content" id="mychall">{{ desc }}</div>
       </div>
 
-      <div class="shot is-hidden" id="shot_challenge">
+    <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="get_text()">등록</button>
-        <textarea
-          id="chall_text"
-          class="textarea is-primary"
-          placeholder="챌린지 인증글을 남겨주세요"
-        ></textarea>
-      </div>
+        <textarea id="chall_text" class="textarea is-primary" placeholder="챌린지 인증글을 남겨주세요"></textarea>
     </div>
   </body>
 </html>
