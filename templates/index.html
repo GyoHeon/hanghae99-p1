@@ -13,6 +13,7 @@
 			src="https://kit.fontawesome.com/8c9eb7dad1.js"
 			crossorigin="anonymous"
 		></script>
+
 </head>
 <body>
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
@@ -29,7 +30,7 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                <p class="control has-icons-right  ">
+                <p class="control has-icons-right">
                     <input class="input" placeholder="Search">
                     <span class="icon is-small is-right">
                     </span>
@@ -61,7 +62,7 @@
     <div class="card">
       {% for challenge in challenges %}
       <div class="card-wrap detail_page">
-        <a href="Detail.html">
+        <a href="/detail/{{ challenge.title }}">
           <div class="card-image">
             <figure class="image is-4by3">
               <img src="{{ challenge.url }}" alt="Placeholder image" />

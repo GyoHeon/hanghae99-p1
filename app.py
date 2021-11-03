@@ -86,16 +86,15 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-'''
-# 상세페이지 - 이교헌
-@app.route('/detail', method=['GET'])
-def detail_load():
-    title_receive = request.form['title_give']
-    challenge = db.chall.find_one({"title": title_receive})
-    img_url = challenge['url']
-    desc = challenge['description']
-    return render_template("detail.html", title=title_receive, img=img_url, desc=desc)
-'''
+
+# 상세페이지이동
+@app.route('/detail/<title_give>')
+def detail(title_give):
+    challenge = db.chall.find_one({"title": title_give}, {"_id": False})
+    img = challenge["url"]
+    desc = challenge["description"]
+    return render_template('detail.html', title=title_give, img=img, desc=desc)
+
 
 '''
 # 뱃지 시스템 - 이교헌
@@ -106,5 +105,7 @@ def badge():
     now_day = db.users.
     progress = now_day//all_day
 '''
+
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=8000, debug=True)
