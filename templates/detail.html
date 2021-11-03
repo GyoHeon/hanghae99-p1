@@ -28,29 +28,45 @@
     <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
   </head>
   <script>
+
     function shot_report() {
-        alert("'매주 0.5Kg 감량하기'에 정말 참가하시겠습니까?'")
-        $("#shot_challenge").toggleClass("is-hidden")
-        $("#btn-hide").hide()
+      alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
+      $("#shot_challenge").toggleClass("is-hidden");
+      $("#btn-hide").hide();
+
+      let profile_chall = '{{ title }}'       //클릭했을때
+      let today = new Date().toISOString()    //날짜정보
+
+      $.ajax({
+        type: "post",
+        url: "/my_chall",
+        data: {
+          profile_chal_give: profile_chall,
+          date_give: today
+        },
+        success: function (response) {
+          console.log(response);
+        },
+      });
     }
 
-    function post_text() {
-        let chall = $("#chall_text").val()
-        $.ajax({
-            type: "POST",
-            url: "/my_chall",
-            data: {
-                chall_give: chall,
-                user_name_give: user_name,
-            },
-            success: function (response) {
-                alert("인증 글이 등록되었습니다.")
-            }
-        });
+    function post() {
+      let comment = $("#chall_text").val()
+      let today = new Date().toISOString()
+      $.ajax({
+        type: "POST",
+        url: "/posting",
+        data: {
+          comment_give: comment,
+          date_give: today
+        },
+        success: function (response) {
+          window.location.reload()
+        }
+      })
     }
 
     function get_text() {
-
       let chall = $("#chall_text").val();
       if (chall == "") {
         alert("인증글을 남겨주세요");
@@ -128,8 +144,13 @@
 
     <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
-        <button class="button is-primary" onclick="get_text()">등록</button>
-        <textarea id="chall_text" class="textarea is-primary" placeholder="챌린지 인증글을 남겨주세요"></textarea>
+        <button class="button is-primary" onclick="post()">등록</button>
+        <textarea
+          id="chall_text"
+          class="textarea is-primary"
+          placeholder="챌린지 인증글을 남겨주세요"
+        ></textarea>
+      </div>
     </div>
   </body>
 </html>
