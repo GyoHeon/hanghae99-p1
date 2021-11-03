@@ -14,11 +14,20 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
     <script
       src="https://kit.fontawesome.com/8c9eb7dad1.js"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function sign_out() {
+        $.removeCookie("mytoken", { path: "/" });
+        alert("로그아웃!");
+        window.location.href = "/login";
+      }
+    </script>
   </head>
   <body>
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
@@ -43,11 +52,9 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">
-              <a style="margin-left: 30px" class="button logout">
-                <strong>Logout</strong>
-              </a>
-            </div>
+            <a class="button logout" onclick="sign_out()">
+              <strong>Logout</strong>
+            </a>
           </div>
         </div>
       </div>
