@@ -22,10 +22,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   </head>
   <script>
+
     function shot_report() {
       alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
       $("#shot_challenge").toggleClass("is-hidden");
       $("#btn-hide").hide();
+
+      let profile_chall = '{{ title }}'       //클릭했을때
+      let today = new Date().toISOString()    //날짜정보
+
+      $.ajax({
+        type: "post",
+        url: "/my_chall",
+        data: {
+          profile_chal_give: profile_chall,
+          date_give: today
+        },
+        success: function (response) {
+          console.log(response);
+        },
+      });
+    }
+
+    function post() {
+      let comment = $("#chall_text").val()
+      let today = new Date().toISOString()
+      $.ajax({
+        type: "POST",
+        url: "/posting",
+        data: {
+          comment_give: comment,
+          date_give: today
+        },
+        success: function (response) {
+          window.location.reload()
+        }
+      })
     }
 
     function get_text() {
@@ -114,7 +146,7 @@
 
       <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
-        <button class="button is-primary" onclick="get_text()">등록</button>
+        <button class="button is-primary" onclick="post()">등록</button>
         <textarea
           id="chall_text"
           class="textarea is-primary"
