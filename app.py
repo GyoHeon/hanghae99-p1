@@ -73,7 +73,8 @@ def sign_up():
         "profile_name": username_receive,                           # 프로필 이름 기본값은 아이디
         "profile_pic": "",                                          # 프로필 사진 파일 이름
         "profile_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
-        "profile_info": ""                                          # 프로필 한 마디
+        "profile_info": "",                                         # 프로필 한 마디
+        "profile_chall": ""                                         # 참가한 챌린지
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
@@ -95,6 +96,17 @@ def detail(title_give):
     desc = challenge["description"]
     return render_template('detail.html', title=title_give, img=img, desc=desc)
 
+'''
+@app.route('/detail/<username>')
+def detail(username):
+    title_receive= request.form["title_give"]
+    challenge = db.chall.find_one({"title": title_receive}, {"_id": False})
+    user_info = db.users.find_one({"username": username}, {"_id": False})
+    img = challenge["url"]
+    desc = challenge["description"]
+
+    return render_template('detail.html',user_info=user_info,title=title_receive, img=img, desc=desc)
+'''
 
 '''
 # 뱃지 시스템 - 이교헌
