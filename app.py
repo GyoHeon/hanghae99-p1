@@ -73,7 +73,8 @@ def sign_up():
         "profile_name": username_receive,                           # 프로필 이름 기본값은 아이디
         "profile_pic": "",                                          # 프로필 사진 파일 이름
         "profile_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
-        "profile_info": ""                                          # 프로필 한 마디
+        "profile_info": "",                                         # 프로필 한 마디
+        "profile_chall": ""                                         # 참가한 챌린지
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
@@ -95,8 +96,8 @@ def detail(title_give):
     desc = challenge["description"]
     return render_template('detail.html', title=title_give, img=img, desc=desc)
 
-#상세페이지 인증글 db에 저장-이한울
 
+# 상세페이지 인증글 db에 저장-이한울
 @app.route('/posting', methods=['POST'])
 def posting():
     token_receive = request.cookies.get('mytoken')
@@ -117,7 +118,9 @@ def posting():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-#상세페이지 참가 db에 저장 -이한울
+      
+# 상세페이지 참가 db에 저장 - 이한울
+# insert 고쳐야함 - date 필요한지 재검토
 @app.route('/my_chall', methods=['POST'])
 def my_chall():
     token_receive = request.cookies.get('mytoken')
@@ -137,6 +140,8 @@ def my_chall():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+      
+      
 '''
 # 뱃지 시스템 - 이교헌
 @app.route('/my_badges', method=['GET'])
