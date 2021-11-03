@@ -22,7 +22,6 @@
                 <p style="font-size: 30px; font-weight: bolder; color: darkblue;">Dr. CHALLENGE</p>
             </a>
         </div>
-
         <div class="navbar-end">
             <div class="navbar-item">
                 <p class="control has-icons-right  ">
@@ -30,15 +29,6 @@
                     <span class="icon is-small is-right">
                     </span>
                 </p>
-
-                <div class="buttons">
-                    <a style="margin-left: 30px" class="button is-primary">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light">
-                        Log in
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -64,19 +54,19 @@
         <a href="Detail.html">
             <div class="card-image">
                 <figure class="image is-4by3">
-                    <img src="https://dsfjpb8zhc170.cloudfront.net/store/thumbnails/59b4cb5786664db6b1280a8cdfe6d64e.jpg"
+                    <img src="{{ challenges[0].url }}"
                          alt="Placeholder image">
                 </figure>
             </div>
             <div class="card-content">
                 <div class="media">
                     <div class="media-content">
-                        <p class="title is-4">매주 0.5Kg 감량하기</p>
+                        <p class="title is-4">{{ challenges[0].title }}</p>
                         <p class="subtitle is-6">공식 챌린지</p>
                     </div>
                 </div>
                 <div class="content">
-                    간단설명: 4주일 동안 매주 0.5Kg 감량하기
+                    간단설명: {{ challenges[0].description }}
                     <br>
                     <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
                 </div>

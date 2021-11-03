@@ -14,9 +14,7 @@
 
 </head>
 <script>
-    $(document).ready(function () {
-        get_text()
-    })
+
 
     function shot_report() {
         alert("'매주 0.5Kg 감량하기'에 정말 참가하시겠습니까?'")
@@ -32,20 +30,21 @@
             data: {
                 chall_give: chall,
                 user_name_give: user_name,
-
             },
             success: function (response) {
                 alert("인증 글이 등록되었습니다.")
-
             }
         });
     }
 
     function get_text() {
         let chall = $("#chall_text").val()
-        let html_temp = `<h1>인증 글: ${chall}  </h1>`
+        if (chall == "") {
+            alert("인증글을 남겨주세요")
+            return
+        }
+        let html_temp = `<h1>인증: ${chall}  </h1>`
         $("#mychall").append(html_temp)
-
 
         $.ajax({
             type: "GET",
@@ -56,6 +55,20 @@
             }
         })
     }
+
+    function challenge() {
+         $.ajax({
+            type: "GET",
+            url: "/my_chall",
+            data: {
+
+            },
+            success: function (response) {
+                console.log(response)
+            }
+        })
+    }
+
 </script>
 <body>
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
@@ -70,7 +83,6 @@
                 <p style="font-size: 30px; font-weight: bolder; color: darkblue;">Dr. CHALLENGE</p>
             </a>
         </div>
-
         <div class="navbar-end">
             <div class="navbar-item">
                 <p class="control has-icons-right  ">
@@ -78,7 +90,6 @@
                     <span class="icon is-small is-right">
                     </span>
                 </p>
-
             </div>
         </div>
     </div>
@@ -117,14 +128,10 @@
     </div>
     <div class="card-content">
         <h1> 챌린지 설명</h1>
-        <div class="content">
-            4주일 동안 주 1일, 하루에 인증샷을 1번 찍어야해요!
-            체중계 위에서 몸무게 사진을 찍고 인증을 해주세요~
+        <div class="content" id="mychall">
+            4주일 동안 주 1일, 하루에 인증글을 1번 등록해야해요!
+            체중계로 몸무게를 재신후 매 주 등록해 주세요~
         </div>
-        <div id="mychall">
-
-        </div>
-
     </div>
 
     <div class="shot is-hidden" id="shot_challenge">
