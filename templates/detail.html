@@ -18,8 +18,13 @@
       rel="stylesheet"
       href="path/to/font-awesome/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script
+      src="https://kit.fontawesome.com/8c9eb7dad1.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <script>
     function shot_report() {
@@ -51,49 +56,39 @@
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-logo" href="#">
-          <img src="/challenge.jpg" width="112" height="120" />
+          <i class="fas fa-user-md"></i>
         </a>
       </div>
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">
-            <p style="font-size: 30px; font-weight: bolder; color: darkblue">
+          <a class="navbar-item" href="/">
+            <p
+              style="
+                font-size: 40px;
+                font-weight: 700;
+                color: RGB(147, 190, 236);
+              "
+            >
               Dr. CHALLENGE
             </p>
           </a>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <p class="control has-icons-right">
-              <input class="input" placeholder="Search" />
-              <span class="icon is-small is-right"> </span>
-            </p>
+            <div class="buttons">
+              <a style="margin-left: 30px" class="button logout">
+                <strong>Logout</strong>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </nav>
-    <nav class="panel">
-      <p class="panel-tabs">
-        <a class="is-active">전체</a>
-        <a>다이어트</a>
-        <a>운동</a>
-        <a>공부</a>
-        <a>독서</a>
-        <a>돈관리</a>
-        <a>취미</a>
-        <a>생활습관</a>
-        <a>돌봄</a>
-      </p>
-    </nav>
     <div class="card">
       <div class="card-title">
         <div class="card-image">
-          <figure class="image is-4by3">
-            <img
-              class="challenge-image"
-              src="{{ img }}"
-              alt="Placeholder image"
-            />
+          <figure class="detail-img">
+            <img class="detail-img" src="{{ img }}" alt="Placeholder image" />
           </figure>
         </div>
         <div class="title-text">
@@ -101,7 +96,7 @@
           <p>공식 챌린지</p>
           <p>참가 인원 : 00 명</p>
           <div id="btn-hide">
-            <button onclick="shot_report()" class="button is-primary">
+            <button onclick="shot_report()" class="button entrance-btn">
               참가하기
             </button>
           </div>
@@ -123,68 +118,4 @@
       </div>
     </div>
   </body>
-  <style>
-    * {
-      font-family: "Gothic A1", sans-serif;
-    }
-
-    a {
-      font-size: 18px;
-    }
-
-    .navbar-logo {
-      margin-top: 7px;
-      width: 150px;
-      height: 100px;
-    }
-
-    .panel-tabs {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-    }
-
-    .card {
-      height: 550px;
-      width: 1000px;
-      margin: 70px auto;
-    }
-
-    .card-title {
-      display: flex;
-      flex-direction: row;
-      margin: 20px auto;
-      width: 900px;
-    }
-
-    .image {
-      height: 300px;
-      width: 500px;
-      border-radius: 30px;
-      margin-top: 20px;
-    }
-
-    .challenge-image {
-      border-radius: 30px;
-      background-position: initial;
-    }
-
-    .title-text {
-      margin: 100px 0 0 30px;
-    }
-
-    h1 {
-      font-weight: bold;
-      font-size: 25px;
-    }
-
-    .button {
-      margin-top: 20px;
-    }
-
-    .shot {
-      margin: 30px;
-    }
-  </style>
 </html>
