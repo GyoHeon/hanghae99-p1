@@ -1,0 +1,93 @@
+body {
+  background-color: rgba(247, 224, 130, 0.8);
+  min-height: 100vh;
+}
+
+.section {
+  padding: 1rem 1.5rem;
+  max-width: 750px;
+  margin: auto;
+}
+.login-icon {
+  margin-right: 30px;
+}
+.title {
+  font-weight: 800;
+  font-size: 5rem;
+}
+
+.subtitle {
+  font-size: 2rem;
+}
+
+.is-sparta {
+  color: RGB(147, 190, 236) !important;
+}
+
+.button.is-sparta {
+  background-color: RGB(147, 190, 236);
+  border-color: transparent;
+  color: #fff !important;
+}
+
+.button.is-sparta.is-outlined {
+  background-color: transparent;
+  border-color: RGB(147, 190, 236);
+  color: RGB(147, 190, 236) !important;
+}
+
+.help {
+  color: gray;
+}
+.box-text {
+  color: RGB(147, 190, 236);
+}
+
+a {
+  font-size: 18px;
+}
+
+.navbar-logo {
+  font-size: 50px;
+  margin: 0 20px;
+  color: RGB(147, 190, 236);
+}
+.logout {
+  background-color: rgba(147, 190, 235, 0.3);
+}
+.panel {
+  background-color: white;
+}
+.panel-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.card-image {
+  width: 200px;
+  height: 200px;
+  background-color: beige;
+}
+
+.card-wrap {
+  margin: 40px 0px 0px 35px;
+  padding: 0px;
+  background-color: white;
+}
+
+.card-content {
+  margin: 0;
+  padding: 10px;
+}
+
+.card {
+  margin: 60px;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  background-color: rgba(147, 190, 235, 0.8);
+  height: 90vh;
+}
