@@ -43,8 +43,9 @@
             alert("인증글을 남겨주세요")
             return
         }
-        let html_temp = `<h1>인증: ${chall}  </h1>`
-        $("#mychall").append(html_temp)
+        let html_temp = `
+           <ul><li><span>{{ date_time }}</span> <span>${chall}</span></li></ul>`
+        $(".title-text").append(html_temp)
 
         $.ajax({
             type: "GET",
@@ -57,12 +58,10 @@
     }
 
     function challenge() {
-         $.ajax({
+        $.ajax({
             type: "GET",
             url: "/my_chall",
-            data: {
-
-            },
+            data: {},
             success: function (response) {
                 console.log(response)
             }
@@ -139,6 +138,7 @@
         <button class="button is-primary" onclick="get_text()">등록</button>
         <textarea id="chall_text" class="textarea is-primary" placeholder="챌린지 인증글을 남겨주세요"></textarea>
     </div>
+
 </div>
 
 
@@ -150,6 +150,10 @@
 
     a {
         font-size: 18px;
+    }
+
+    .current_time {
+        font-size: 10px;
     }
 
     .navbar-logo {

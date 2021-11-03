@@ -5,7 +5,7 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
-
+from datetime import datetime
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -13,11 +13,15 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
+
 client = MongoClient('localhost', 27017)
 #client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
 #client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
+
+now = datetime.now()
+date_time = now.strftime("%Y-%m-%d-%H:%M")
 # 메인페이지-챌린지 정보 주기__이교헌
 @app.route('/')
 def home():
@@ -93,7 +97,7 @@ def detail(title_give):
     challenge = db.chall.find_one({"title": title_give}, {"_id": False})
     img = challenge["url"]
     desc = challenge["description"]
-    return render_template('detail.html', title=title_give, img=img, desc=desc)
+    return render_template('detail.html', title=title_give, img=img, desc=desc, date_time=date_time)
 
 
 '''
