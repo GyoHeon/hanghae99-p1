@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dr. Challenge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,15 +20,13 @@
         <a class="navbar-logo" href="#">
             <i class="fas fa-user-md"></i>
         </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item">
                 <p style="font-size: 40px; font-weight: 700; color: RGB(147, 190, 236);">Dr. CHALLENGE</p>
             </a>
         </div>
-
         <div class="navbar-end">
             <div class="navbar-item">
                 <p class="control has-icons-right  ">
@@ -44,10 +42,10 @@
                 </div>
             </div>
         </div>
-    </div>
-</nav>
-<nav class="panel">
-    <p class="panel-tabs">
+      </div>
+    </nav>
+    <nav class="panel">
+      <p class="panel-tabs">
         <a class="is-active">전체</a>
         <a>다이어트</a>
         <a>운동</a>
@@ -55,111 +53,37 @@
         <a>독서</a>
         <a>취미</a>
         <a>생활습관</a>
-    </p>
-
-</nav>
-<div class="card">
-    <div class="card-wrap">
-        <div class="card-image">
+      </p>
+    </nav>
+    <div class="box">
+      <p class="box-text">작심삼일은 이제그만!</p>
+    </div>
+    <div class="card">
+      {% for challenge in challenges %}
+      <div class="card-wrap detail_page">
+        <a href="Detail.html">
+          <div class="card-image">
             <figure class="image is-4by3">
-                <img src="#" alt="Placeholder image">
+              <img src="{{ challenge.url }}" alt="Placeholder image" />
             </figure>
-        </div>
-        <div class="card-content">
+          </div>
+          <div class="card-content">
             <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">(이벤트)-운동하기</p>
-                    <p class="subtitle is-6">성공하자!</p>
-                </div>
+              <div class="media-content">
+                <p class="title is-4">{{ challenge.title }}</p>
+                <p class="subtitle is-6">공식 챌린지</p>
+              </div>
             </div>
             <div class="content">
-                간단설명: 스트레칭하기
-                <p><a href="#">상세페이지 가기</a></p>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+              간단설명: {{ challenge.description }}
+              <br />
+              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
             </div>
-        </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
     </div>
-    <div class="card-wrap">
-        <div class="card-image">
-            <figure class="image is-4by3">
-                <img src="#" alt="Placeholder image">
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">(이벤트)-운동하기</p>
-                    <p class="subtitle is-6">성공하자!</p>
-                </div>
-            </div>
-            <div class="content">
-                간단설명: 스트레칭하기
-                <p><a href="#">상세페이지 가기</a></p>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-        </div>
-    </div>
-    <div class="card-wrap">
-        <div class="card-image">
-            <figure class="image is-4by3">
-                <img src="#" alt="Placeholder image">
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">(이벤트)-운동하기</p>
-                    <p class="subtitle is-6">성공하자!</p>
-                </div>
-            </div>
-            <div class="content">
-                간단설명: 스트레칭하기
-                <p></p><a href="#">상세페이지 가기</a></p>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-        </div>
-    </div>
-    <div class="card-wrap">
-        <div class="card-image">
-            <figure class="image is-4by3">
-                <img src="#" alt="Placeholder image">
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">(이벤트)-운동하기</p>
-                    <p class="subtitle is-6">성공하자!</p>
-                </div>
-            </div>
-            <div class="content">
-                간단설명: 스트레칭하기
-                <p><a href="#">상세페이지 가기</a></p>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-        </div>
-    </div>
-    <div class="card-wrap">
-        <div class="card-image">
-            <figure class="image is-4by3">
-                <img src="#" alt="Placeholder image">
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-4">(이벤트)-운동하기</p>
-                    <p class="subtitle is-6">성공하자!</p>
-                </div>
-            </div>
-            <div class="content">
-                간단설명: 스트레칭하기
-                <p><a href="#">상세페이지 가기</a></p>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-        </div>
-    </div>
-
 </div>
 </body>
 </html>
