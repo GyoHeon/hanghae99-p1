@@ -21,50 +21,15 @@
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
     />
-    <style>
-      body {
-        background-color: RGBA(232, 52, 78, 0.2);
-        min-height: 100vh;
-      }
-
-      .section {
-        padding: 1rem 1.5rem;
-        max-width: 750px;
-        margin: auto;
-      }
-
-      .title {
-        font-weight: 800;
-        font-size: 5rem;
-      }
-
-      .subtitle {
-        font-size: 2rem;
-      }
-
-      .is-sparta {
-        color: #e8344e !important;
-      }
-
-      .button.is-sparta {
-        background-color: #e8344e;
-        border-color: transparent;
-        color: #fff !important;
-      }
-
-      .button.is-sparta.is-outlined {
-        background-color: transparent;
-        border-color: #e8344e;
-        color: #e8344e !important;
-      }
-
-      .help {
-        color: gray;
-      }
-    </style>
+    <link rel="stylesheet" href="/static/style.css" />
+    <style></style>
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script
+      src="https://kit.fontawesome.com/8c9eb7dad1.js"
+      crossorigin="anonymous"
+    ></script>
 
     <script>
       // {% if msg %}
@@ -249,7 +214,9 @@
         class="hero-body has-text-centered"
         style="padding-bottom: 1rem; margin: auto"
       >
-        <h1 class="title is-sparta">Dr.Challenge</h1>
+        <h1 class="title is-sparta">
+          <i class="fas fa-user-md login-icon"></i>Dr.Challenge
+        </h1>
         <h3 class="subtitle is-sparta">
           끝까지 버티는 습관이 승리하는 습관이다.
         </h3>
