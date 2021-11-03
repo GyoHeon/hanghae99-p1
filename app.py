@@ -31,6 +31,7 @@ def home():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
+
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인
@@ -84,3 +85,32 @@ def check_dup():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
+
+'''
+#상세페이지이동
+@app.route('/detail/<username>')  #
+def detail(username):
+    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+
+        title_receive = request.args['title_give']
+        challenge = list(db.chall.find_one({"title":title_receive}, {"_id": False}))
+
+        user_info = db.users.find_one({"username": username}, {"_id": False})
+        return render_template('detail.html', user_info=user_info, status=status, challenge=challenge)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+'''
+# 상세페이지이동
+@app.route('/detail', methods=['GET'])
+def detail():
+    title_receive = request.args['title_give']
+    challenge = db.chall.find_one({"title": title_receive}, {"_id": False})
+    title = title_receive
+    img = challenge["url"]
+    desc = challenge["description"]
+
+    return render_template('detail.html', title=title, img=img, desc=desc)
