@@ -17,25 +17,12 @@
 
 
     function shot_report() {
-        alert("'매주 0.5Kg 감량하기'에 정말 참가하시겠습니까?'")
+        alert(`'{{ title }}'에 정말 참가하시겠습니까?'`)
         $("#shot_challenge").toggleClass("is-hidden")
         $("#btn-hide").hide()
     }
 
-    function post_text() {
-        let chall = $("#chall_text").val()
-        $.ajax({
-            type: "POST",
-            url: "/my_chall",
-            data: {
-                chall_give: chall,
-                user_name_give: user_name,
-            },
-            success: function (response) {
-                alert("인증 글이 등록되었습니다.")
-            }
-        });
-    }
+
 
     function get_text() {
         let chall = $("#chall_text").val()
@@ -56,18 +43,7 @@
         })
     }
 
-    function challenge() {
-         $.ajax({
-            type: "GET",
-            url: "/my_chall",
-            data: {
 
-            },
-            success: function (response) {
-                console.log(response)
-            }
-        })
-    }
 
 </script>
 <body>
@@ -112,12 +88,12 @@
         <div class="card-image">
             <figure class="image is-4by3">
                 <img class="challenge-image"
-                     src="https://dsfjpb8zhc170.cloudfront.net/store/thumbnails/59b4cb5786664db6b1280a8cdfe6d64e.jpg"
+                     src="{{ img }}"
                      alt="Placeholder image">
             </figure>
         </div>
         <div class="title-text">
-            <h1>매주 0.5Kg 감량하기</h1>
+            <h1>{{ title }}</h1>
             <p>공식 챌린지</p>
             <P>참가 인원 : 00 명</P>
             <div id="btn-hide">
@@ -129,8 +105,7 @@
     <div class="card-content">
         <h1> 챌린지 설명</h1>
         <div class="content" id="mychall">
-            4주일 동안 주 1일, 하루에 인증글을 1번 등록해야해요!
-            체중계로 몸무게를 재신후 매 주 등록해 주세요~
+            {{ desc }}
         </div>
     </div>
 
