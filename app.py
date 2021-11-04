@@ -108,6 +108,12 @@ def detail(title_give):
 def posting():
     token_receive = request.cookies.get('mytoken')
     try:
+        # 사진파일 받기
+        file = request.files["file_give"]
+
+        save_to = 'static/mypicture.jpg'
+        file.save(save_to)
+
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         comment_receive = request.form["comment_give"]
