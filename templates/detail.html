@@ -33,7 +33,8 @@
     function shot_report() {
         alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
 
-        $("#shot_challenge").toggleClass("is-hidden");
+        $("#shot_challenge").toggleClass("is-hidden")
+        $(".btn-show").toggleClass("is-hidden")
         $("#btn-hide").hide();
 
         let profile_chall = '{{ title }}'       //클릭했을때
@@ -167,6 +168,11 @@
             <div id="btn-hide">
                 <button onclick="shot_report()" class="button entrance-btn">
                     참가하기
+                </button>
+            </div>
+            <div >
+                <button class="button is-danger btn-show is-hidden">
+                    챌린지 참가 중
                 </button>
             </div>
         </div>
