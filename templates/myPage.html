@@ -41,76 +41,85 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="/">
-                <p
-                        style="
+          <a class="navbar-item" href="/">
+            <p
+              style="
                 font-size: 40px;
                 font-weight: 700;
                 color: RGB(147, 190, 236);
               "
-                >
-                    Dr. CHALLENGE
-                </p>
-            </a>
+            >
+              Dr. CHALLENGE
+            </p>
+          </a>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item">
-                <a class="button logout" onclick="sign_out()">
-                    <strong>Logout</strong>
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
-<div class="card">
-    <div class="profile-body">
-        <div class="container mt-5">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-7">
-                    <div class="profile-card p-3 py-4">
-                        <div class="text-center"><img src="https://i.imgur.com/bDLhJiP.jpg" width="130"
-                                                      class="rounded-circle"></div>
-                        <div class="text-center mt-3">
-                            <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
-                                <div class="card-header">참가자</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Info card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% for challenge in challenges %}
-        <div class="card-wrap detail_page">
-            <a href="/detail/{{ challenge.title }}">
-                <div class="card-image">
-                    <img
-                            src="{{ challenge.url }}"
-                            alt="Placeholder image"
-                            class="index-img"
-                    />
-                </div>
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-content">
-                            <p class="title is-4 index-title">{{ challenge.title }}</p>
-                            <p class="subtitle is-6">공식 챌린지</p>
-                        </div>
-                    </div>
-                    <div class="content index-content">
-                        <p class="chall-desc">{{ challenge.description }}</p>
-                        <br/>
-                    </div>
-                </div>
+          <div class="navbar-item">
+            <a class="button logout" onclick="sign_out()">
+              <strong>Logout</strong>
             </a>
+          </div>
         </div>
-        {% endfor %}
+      </div>
+    </nav>
+    <div class="card my-card">
+      <div class="profile-body">
+        <div class="container mt-5">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-7">
+              <div class="profile-card p-3 py-4">
+                <div class="text-center">
+                  <img
+                    src="https://i.imgur.com/bDLhJiP.jpg"
+                    width="130"
+                    class="rounded-circle"
+                  />
+                </div>
+                <div class="text-center mt-3">
+                  <div
+                    class="card text-white bg-info mb-3"
+                    style="max-width: 20rem"
+                  >
+                    <div class="card-header">참가자</div>
+                    <div class="card-body">
+                      <h5 class="card-title">Info card title</h5>
+                      <p class="card-text">
+                        Some quick example text to build on the card title and
+                        make up the bulk of the card's content.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% for challenge in user_challenges %}
+      <div class="card-wrap detail_page">
+        <a href="/detail/{{ challenge.title }}">
+          <div class="card-image">
+            <img
+              src="{{ challenge.url }}"
+              alt="Placeholder image"
+              class="index-img"
+            />
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4 index-title">{{ challenge.title }}</p>
+                <p class="subtitle is-6">공식 챌린지</p>
+              </div>
+            </div>
+            <div class="content index-content">
+              <p class="chall-desc">{{ challenge.description }}</p>
+              <br />
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
     </div>
-
 </body>
 </html>

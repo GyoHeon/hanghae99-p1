@@ -52,7 +52,36 @@ body {
   height: auto;
   color: black;
 }
-
+profile-body {
+  background: #28527a;
+}
+.profile-card:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #cce5ff;
+  transform: scaleY(1);
+  transition: all 0.5s;
+  transform-origin: bottom;
+}
+.profile-card:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #3399ff;
+  transform: scaleY(0);
+  transition: all 0.5s;
+  transform-origin: bottom;
+}
+.profile-card:hover::after {
+  transform: scaleY(1);
+}
 .section {
   padding: 1rem 1.5rem;
   max-width: 750px;
@@ -60,6 +89,7 @@ body {
 }
 .login-icon {
   margin-right: 30px;
+  color: #28527a;
 }
 .title {
   font-weight: 800;
@@ -116,7 +146,12 @@ a {
   color: RGB(147, 190, 236);
 }
 .logout {
+  background-color: white;
+  margin-right: 20px;
+}
+.mypage {
   background-color: rgba(147, 190, 235, 0.3);
+  margin-right: 30px;
 }
 .panel {
   background-color: white;
@@ -158,7 +193,7 @@ a {
   background-color: rgba(147, 190, 235, 0.8);
   height: auto;
   border-radius: 10px;
-    justify-content: center;
+  justify-content: space-evenly;
 }
 
 .index-img {
@@ -171,7 +206,7 @@ a {
   margin-top: 10px;
 }
 .title {
-  color: RGB(147, 190, 236);
+  color: #28527a;
 }
 .chall-desc {
   width: 230px;
@@ -216,13 +251,16 @@ a {
 .entrance-btn {
   color: black;
 }
-
 .profile-card {
-    border: none;
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    cursor: pointer
-    margin-left : 200px;
-    background-color: #CCEEFF;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 200px;
+  background-color: #cceeff;
+}
+.my-card {
+  display: flex;
+  flex-direction: column;
 }
