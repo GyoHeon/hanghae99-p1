@@ -98,7 +98,7 @@ def detail(title_give):
         challenge = db.chall.find_one({"title": title_give}, {"_id": False})
         img = challenge["url"]
         desc = challenge["description"]
-        return render_template('detail.html', title=title_give, img=img, desc=desc, user_challenges=user_challenges)
+        return render_template('detail.html', title=title_give, img=img, desc=desc, user_challenges=user_challenges, user_info=db.users.find_one({"username": payload["id"]})['username'])
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -169,7 +169,7 @@ def my_chall():
 def mypage(username):
     user_challenges_title = db.users.find_one({"username": username})["profile_chall"]
     user_challenges = db.chall.find({'title':{'$in':user_challenges_title}})
-    return render_template('detail.html', user_challenges=user_challenges)
+    return render_template('mypage.html', user_challenges=user_challenges)
 
       
 '''
