@@ -46,7 +46,6 @@
 
         let profile_chall = '{{ title }}'       //클릭했을때
         let today = new Date().toISOString()    //날짜정보
-
         $.ajax({
             type: "post",
             url: "/my_chall",
@@ -59,32 +58,28 @@
             },
         });
     }
-    function post() {
-      let comment = $("#chall_text").val();
-      let today = new Date().toISOString();
-  
-      if (comment == "") {
-            alert("인증글을 남겨주세요");
-            return;
-        }
-  
-      $.ajax({
-        type: "POST",
-        url: "/posting",
-        data: {
-          comment_give: comment,
-          date_give: today,
-        },
-        success: function (response) {
-          window.location.reload();
-        },
-      });
-    }
 
+    function post() {
+        let comment = $("#chall_text").val()
+        let today = new Date().toISOString()
+        let title = '{{ title }}'                      //2중배열  인증글 위한 title 필요해서 추가한것
+        if (comment == "") {
+        alert("인증글을 남겨주세요");
+        return;
+      }
+        $.ajax({
+            type: "POST",
+            url: "/posting",
+            data: {
+                title_give: title,                      //2중배열  인증글 위한 title 필요해서 추가한것
+                comment_give: comment,
+                date_give: today
+            },
+            success: function (response) {
+              window.location.reload();
             }
         })
     }
-
 
     function sign_out() {
         $.removeCookie("mytoken", {path: "/"});
