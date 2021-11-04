@@ -22,7 +22,11 @@ body {
   font-size: 2rem;
 }
 
-.is-sparta {
+.title.is-sparta {
+  color: RGB(147, 190, 236);
+}
+
+.subtitle.is-sparta {
   color: RGB(147, 190, 236);
 }
 

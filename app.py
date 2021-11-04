@@ -120,7 +120,6 @@ def posting():
 
       
 # 상세페이지 참가 db에 저장 - 이한울
-# insert 고쳐야함 - date 필요한지 재검토
 @app.route('/my_chall', methods=['POST'])
 def my_chall():
     token_receive = request.cookies.get('mytoken')
@@ -128,13 +127,6 @@ def my_chall():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         profile_chall_receive = request.form["profile_chall_give"]
-        date_receive = request.form["date_give"]
-        doc = {
-            "username": user_info["username"],
-            "profile_chall": profile_chall_receive,
-            "date": date_receive
-        }
-        db.users.insert_one(doc)
         db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
 
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
@@ -146,7 +138,7 @@ def my_chall():
 # 뱃지 시스템 - 이교헌
 @app.route('/my_badges', method=['GET'])
 def badge():
-    all_day = request.from['days_give']
+    all_day = request.form['days_give']
     #이거 우짬
     now_day = db.users.
     progress = now_day//all_day

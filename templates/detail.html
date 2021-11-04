@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dr. Challenge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,21 +28,20 @@
     <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
   </head>
   <script>
-
     function shot_report() {
       alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
       $("#shot_challenge").toggleClass("is-hidden");
       $("#btn-hide").hide();
 
-      let profile_chall = '{{ title }}'       //클릭했을때
-      let today = new Date().toISOString()    //날짜정보
+      let profile_chall = "{{ title }}"; //클릭했을때
+      let today = new Date().toISOString(); //날짜정보
 
       $.ajax({
         type: "post",
         url: "/my_chall",
         data: {
-          profile_chal_give: profile_chall,
-          date_give: today
+          profile_chall_give: profile_chall,
+          date_give: today,
         },
         success: function (response) {
           console.log(response);
@@ -51,19 +50,19 @@
     }
 
     function post() {
-      let comment = $("#chall_text").val()
-      let today = new Date().toISOString()
+      let comment = $("#chall_text").val();
+      let today = new Date().toISOString();
       $.ajax({
         type: "POST",
         url: "/posting",
         data: {
           comment_give: comment,
-          date_give: today
+          date_give: today,
         },
         success: function (response) {
-          window.location.reload()
-        }
-      })
+          window.location.reload();
+        },
+      });
     }
 
     function get_text() {
@@ -95,10 +94,9 @@
       <div class="navbar-brand">
         <a class="navbar-logo" href="#">
           <i class="fas fa-user-md"></i>
-
         </a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="/">
             <p
@@ -142,7 +140,7 @@
         <div class="content" id="mychall">{{ desc }}</div>
       </div>
 
-    <div class="shot is-hidden" id="shot_challenge">
+      <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
         <textarea
