@@ -16,7 +16,7 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
+    <link rel="stylesheet" href="/static/style.css?after22" type="text/css" />
     <script
       src="https://kit.fontawesome.com/8c9eb7dad1.js"
       crossorigin="anonymous"
@@ -52,6 +52,9 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
+            <a class="button mypage" href="/myPage/{{user_info.username}}">
+              <strong>My page</strong>
+            </a>
             <a class="button logout" onclick="sign_out()">
               <strong>Logout</strong>
             </a>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dr. Challenge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -28,6 +28,7 @@
             src="https://kit.fontawesome.com/8c9eb7dad1.js"
             crossorigin="anonymous"
     ></script>
+
     <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
 </head>
 <script>
@@ -45,7 +46,6 @@
 
         let profile_chall = '{{ title }}'       //클릭했을때
         let today = new Date().toISOString()    //날짜정보
-
         $.ajax({
             type: "post",
             url: "/my_chall",
@@ -60,36 +60,26 @@
     }
 
     function post() {
-        let today = new Date().toISOString()
         let comment = $("#chall_text").val()
-
-        let file = $('.formfile')[0].file[0]
-        let form_data = new FormData()
-
-        form_data.append("file_give", file)
+        let today = new Date().toISOString()
+        let title = '{{ title }}'                      //2중배열  인증글 위한 title 필요해서 추가한것
         if (comment == "") {
-            alert("인증글을 남겨주세요");
-            return;
-        }
-        $("#mychall").append(html_temp);
+        alert("인증글을 남겨주세요");
+        return;
+      }
         $.ajax({
             type: "POST",
             url: "/posting",
             data: {
+                title_give: title,                      //2중배열  인증글 위한 title 필요해서 추가한것
                 comment_give: comment,
-                date_give: today,
-                form_data,
+                date_give: today
             },
-            cache: false,
-            contentType: false,
-            processData: false,
-
             success: function (response) {
-                window.location.reload()
+              window.location.reload();
             }
         })
     }
-
 
     function sign_out() {
         $.removeCookie("mytoken", {path: "/"});
@@ -101,11 +91,10 @@
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-logo" href="#">
-            <i class="fas fa-user-md"></i>
-
+          <i class="fas fa-user-md"></i>
         </a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/">
                 <p
@@ -120,11 +109,14 @@
             </a>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item">
-                <a class="button logout" onclick="sign_out()">
-                    <strong>Logout</strong>
-                </a>
-            </div>
+          <div class="navbar-item">
+            <a class="button mypage" href="/myPage/{{user_info.username}}">
+              <strong>My page</strong>
+            </a>
+            <a class="button logout" onclick="sign_out()">
+              <strong>Logout</strong>
+            </a>
+          </div>
         </div>
     </div>
 </nav>
@@ -155,8 +147,8 @@
     <h1>챌린지 인증하기</h1>
     <button class="button is-primary" onclick="post()">등록</button>
     <div class="mb-3">
-        <label for="file" class="form-label"> </label>
-        <input class="form-control formfile" type="file"  >
+        <label for="formFile" class="form-label"> </label>
+        <input class="form-control" type="file" id="formFile">
     </div>
     <textarea
             id="chall_text"
@@ -193,12 +185,12 @@
         <div class="content" id="mychall">{{ desc }}</div>
     </div>
 
-    <div class="shot is-hidden" id="shot_challenge">
+      <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
         <div class="mb-3">
-            <label for="file" class="form-label"></label>
-            <input class="form-control formfile" type="file" >
+            <label for="formFile" class="form-label"></label>
+            <input class="form-control" type="file" id="formFile">
         </div>
         <textarea
                 id="chall_text"

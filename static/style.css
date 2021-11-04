@@ -1,10 +1,87 @@
+profile-body {
+    background: #28527a;
+}
+
+
+
+.profile-card:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #CCE5FF;
+    transform: scaleY(1);
+    transition: all 0.5s;
+    transform-origin: bottom
+}
+
+.profile-card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #3399FF;
+    transform: scaleY(0);
+    transition: all 0.5s;
+    transform-origin: bottom
+}
+
+
+.profile-card:hover::after {
+    transform: scaleY(1)
+}
+
+.fonts {
+    font-size: 11px
+}
+
+.social-list {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding: 0
+}
+
 body {
   background-color: rgba(147, 190, 236, 0.5);
   min-height: 100vh;
   height: auto;
   color: black;
 }
-
+profile-body {
+  background: #28527a;
+}
+.profile-card:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #cce5ff;
+  transform: scaleY(1);
+  transition: all 0.5s;
+  transform-origin: bottom;
+}
+.profile-card:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #3399ff;
+  transform: scaleY(0);
+  transition: all 0.5s;
+  transform-origin: bottom;
+}
+.profile-card:hover::after {
+  transform: scaleY(1);
+}
 .section {
   padding: 1rem 1.5rem;
   max-width: 750px;
@@ -12,6 +89,7 @@ body {
 }
 .login-icon {
   margin-right: 30px;
+  color: #28527a;
 }
 .title {
   font-weight: 800;
@@ -22,7 +100,11 @@ body {
   font-size: 2rem;
 }
 
-.is-sparta {
+.title.is-sparta {
+  color: RGB(147, 190, 236);
+}
+
+.subtitle.is-sparta {
   color: RGB(147, 190, 236);
 }
 
@@ -64,7 +146,12 @@ a {
   color: RGB(147, 190, 236);
 }
 .logout {
+  background-color: white;
+  margin-right: 20px;
+}
+.mypage {
   background-color: rgba(147, 190, 235, 0.3);
+  margin-right: 30px;
 }
 .panel {
   background-color: white;
@@ -106,6 +193,7 @@ a {
   background-color: rgba(147, 190, 235, 0.8);
   height: auto;
   border-radius: 10px;
+  justify-content: space-evenly;
 }
 
 .index-img {
@@ -118,7 +206,7 @@ a {
   margin-top: 10px;
 }
 .title {
-  color: RGB(147, 190, 236);
+  color: #28527a;
 }
 .chall-desc {
   width: 230px;
@@ -166,4 +254,17 @@ a {
 .modal-content {
     width: 400px;
     height: 400px;
+}
+.profile-card {
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 200px;
+  background-color: #cceeff;
+}
+.my-card {
+  display: flex;
+  flex-direction: column;
 }
