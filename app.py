@@ -13,9 +13,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('localhost', 27017)
+#client = MongoClient('localhost', 27017)
 #client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
-#client = MongoClient('mongodb://test:test@localhost', 27017)
+client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
 # 메인페이지-챌린지 정보 주기__이교헌
@@ -88,13 +88,19 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-# 상세페이지이동
+# 상세페이지이동 - 이한울
 @app.route('/detail/<title_give>')
 def detail(title_give):
-    challenge = db.chall.find_one({"title": title_give}, {"_id": False})
-    img = challenge["url"]
-    desc = challenge["description"]
-    return render_template('detail.html', title=title_give, img=img, desc=desc)
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_challenges = db.users.find_one({"username": payload["id"]})["profile_chall"]
+        challenge = db.chall.find_one({"title": title_give}, {"_id": False})
+        img = challenge["url"]
+        desc = challenge["description"]
+        return render_template('detail.html', title=title_give, img=img, desc=desc, user_challenges=user_challenges)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 # 상세페이지 인증글 db에 저장-이한울
@@ -128,7 +134,6 @@ def my_chall():
         user_info = db.users.find_one({"username": payload["id"]})
         profile_chall_receive = request.form["profile_chall_give"]
         db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
-
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
@@ -146,4 +151,4 @@ def badge():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
