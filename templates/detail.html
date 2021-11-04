@@ -28,7 +28,16 @@
     <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
 </head>
 <script>
-
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
 
     function shot_report() {
         alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
@@ -147,6 +156,19 @@
 <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
     <button class="button is-primary" onclick="post()">등록</button>
+    <div class="file">
+        <label class="file-label">
+            <input class="file-input" type="file" name="resume">
+            <span class="file-cta">
+      <span class="file-icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span class="file-label">
+        인증 샷 올리기
+      </span>
+    </span>
+        </label>
+    </div>
     <textarea
             id="chall_text"
             class="textarea is-primary"
@@ -170,7 +192,7 @@
                     참가하기
                 </button>
             </div>
-            <div >
+            <div>
                 <button class="button is-danger btn-show is-hidden">
                     챌린지 참가 중
                 </button>
@@ -185,6 +207,19 @@
     <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
+        <div class="file">
+            <label class="file-label">
+                <input class="file-input" type="file" name="resume">
+                <span class="file-cta">
+      <span class="file-icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span class="file-label">
+        Choose a file…
+      </span>
+    </span>
+            </label>
+        </div>
         <textarea
                 id="chall_text"
                 class="textarea is-primary"
