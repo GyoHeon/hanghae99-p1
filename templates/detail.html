@@ -41,7 +41,7 @@
         type: "post",
         url: "/my_chall",
         data: {
-          profile_chal_give: profile_chall,
+          profile_chall_give: profile_chall,
           date_give: today
         },
         success: function (response) {
@@ -51,39 +51,28 @@
     }
 
     function post() {
-      let comment = $("#chall_text").val()
-      let today = new Date().toISOString()
-      $.ajax({
-        type: "POST",
-        url: "/posting",
-        data: {
-          comment_give: comment,
-          date_give: today
-        },
-        success: function (response) {
-          window.location.reload()
-        }
-      })
-    }
-
-    function get_text() {
-      let chall = $("#chall_text").val();
-      if (chall == "") {
+        let comment = $("#chall_text").val()
+        let today = new Date().toISOString()
+        let title = '{{ title }}'                      //2중배열  인증글 위한 title 필요해서 추가한것
+        if (comment == "") {
         alert("인증글을 남겨주세요");
         return;
       }
-      let html_temp = `<h1>인증: ${chall}  </h1>`;
+      let html_temp = `<h1>인증: ${comment}  </h1>`;
       $("#mychall").append(html_temp);
-
-      $.ajax({
-        type: "GET",
-        url: "/my_chall",
-        data: {},
-        success: function (response) {
-          console.log(response);
-        },
-      });
+        $.ajax({
+            type: "POST",
+            url: "/posting",
+            data: {
+                title_give: title,                      //2중배열  인증글 위한 title 필요해서 추가한것
+                comment_give: comment,
+                date_give: today
+            },
+            success: function (response) {
+            }
+        })
     }
+
     function sign_out() {
       $.removeCookie("mytoken", { path: "/" });
       alert("로그아웃!");
@@ -91,6 +80,7 @@
     }
   </script>
   <body>
+  <h1>{{review}}  {{username}}</h1>
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-logo" href="#">
