@@ -251,6 +251,10 @@ a {
 .entrance-btn {
   color: black;
 }
+.modal-content {
+    width: 400px;
+    height: 400px;
+}
 .profile-card {
   border: none;
   position: relative;
