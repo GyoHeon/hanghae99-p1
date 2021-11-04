@@ -1,76 +1,116 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Dr. Challenge</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
+            rel="stylesheet"
     />
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
-    <link
-      href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/static/style.css" type="text/css" />
-  </head>
-  <body>
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
+    <script
+            src="https://kit.fontawesome.com/8c9eb7dad1.js"
+            crossorigin="anonymous"
+    ></script>
+    <script>
+        function sign_out() {
+            $.removeCookie("mytoken", {path: "/"});
+            alert("로그아웃!");
+            window.location.href = "/login";
+        }
+
+
+    </script>
+
+</head>
+<body>
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
         <a class="navbar-logo" href="#">
-          <img src="/challenge.jpg" width="112" height="120" />
+            <i class="fas fa-user-md"></i>
         </a>
-      </div>
-      <div id="navbarBasicExample" class="navbar-menu">
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">
-            <p style="font-size: 30px; font-weight: bolder; color: darkblue">
-              Dr. CHALLENGE
-            </p>
-          </a>
+            <a class="navbar-item" href="/">
+                <p
+                        style="
+                font-size: 40px;
+                font-weight: 700;
+                color: RGB(147, 190, 236);
+              "
+                >
+                    Dr. CHALLENGE
+                </p>
+            </a>
         </div>
         <div class="navbar-end">
-          <div class="navbar-item">
-            <p class="control has-icons-right">
-              <input class="input" placeholder="Search" />
-              <span class="icon is-small is-right"> </span>
-            </p>
-          </div>
+            <div class="navbar-item">
+                <a class="button logout" onclick="sign_out()">
+                    <strong>Logout</strong>
+                </a>
+            </div>
         </div>
-      </div>
-    </nav>
-    <div class="wrap">
-      <div class="banner" onclick="window.location.href = '/'"></div>
     </div>
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-end">
-        <div>
-          <h1 id="word" style="display: inline">owl</h1>
-          <h5 id="pronunciation" style="display: inline">/oul/</h5>
+</nav>
+<div class="card">
+    <div class="profile-body">
+        <div class="container mt-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-7">
+                    <div class="profile-card p-3 py-4">
+                        <div class="text-center"><img src="https://i.imgur.com/bDLhJiP.jpg" width="130"
+                                                      class="rounded-circle"></div>
+                        <div class="text-center mt-3">
+                            <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+                                <div class="card-header">참가자</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Info card title</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button id="btn-save" class="btn btn-outline-sparta btn-lg">
-          save
-        </button>
-        <button id="btn-delete" class="btn btn-sparta btn-lg">delete</button>
-      </div>
-      <hr />
-      <div id="definitions">
-        <div style="padding: 10px">
-          <i>noun</i>
-          <br />a nocturnal bird of prey with large eyes, a facial disc, a
-          hooked beak, and typically a loud hooting call.<br />
-          <span class="example"
-            >I love reaching out into that absolute silence, when you can hear
-            the owl or the wind.</span
-          >
+
+        {% for challenge in challenges %}
+        <div class="card-wrap detail_page">
+            <a href="/detail/{{ challenge.title }}">
+                <div class="card-image">
+                    <img
+                            src="{{ challenge.url }}"
+                            alt="Placeholder image"
+                            class="index-img"
+                    />
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4 index-title">{{ challenge.title }}</p>
+                            <p class="subtitle is-6">공식 챌린지</p>
+                        </div>
+                    </div>
+                    <div class="content index-content">
+                        <p class="chall-desc">{{ challenge.description }}</p>
+                        <br/>
+                    </div>
+                </div>
+            </a>
         </div>
-      </div>
+        {% endfor %}
     </div>
-  </body>
+
+</body>
 </html>
