@@ -158,7 +158,7 @@ def my_chall():
 
 # 마이페이지 렌더링 코드 - 이한울 2021/11/04
 # 참가한 챌린지 목록 끌고 오기
-@app.route('/mypage/<username>')
+@app.route('/myPage/<username>')
 def main(username):
     token_receive = request.cookies.get('mytoken')
     try:
@@ -168,7 +168,7 @@ def main(username):
         profile_challs = user_info["profile_chall"]
         user_challenges_title = user_info["profile_chall"]
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}})
-        return render_template('main.html', user_info=user_info, status=status, user_challenges=user_challenges)
+        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges)
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
