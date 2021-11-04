@@ -29,9 +29,11 @@
 </head>
 <script>
 
+
     function shot_report() {
         alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
-        $("#shot_challenge").addClass("is-active")
+
+        $("#shot_challenge").toggleClass("is-hidden");
         $("#btn-hide").hide();
 
         let profile_chall = '{{ title }}'       //클릭했을때
@@ -41,7 +43,7 @@
             type: "post",
             url: "/my_chall",
             data: {
-                profile_chal_give: profile_chall,
+                profile_chall_give: profile_chall,
                 date_give: today
             },
             success: function (response) {
@@ -51,41 +53,35 @@
     }
 
     function post() {
-        $("#modal-post").removeClass("is-active")
-
         let comment = $("#chall_text").val()
-        let today = new Date().toISOString()
+        let today = new Date()
+        let current = today.toISOString()
+
+        let year = today.getFullYear()
+        let month = today.getMonth()
+        let date = today.getDate();
+        let day = today.getDay()
+        let hours = today.getHours()
+
+        if (comment == "") {
+            alert("인증글을 남겨주세요");
+            return;
+        }
+        let html_temp = `<br><span>${year}.${month}.${date}.${day}.${hours}  ${comment}</span>`;
+        $("#mychall").append(html_temp);
         $.ajax({
             type: "POST",
             url: "/posting",
             data: {
                 comment_give: comment,
-                date_give: today
+                date_give: current
             },
             success: function (response) {
-                window.location.reload()
+
             }
         })
     }
 
-    function get_text() {
-        let chall = $("#chall_text").val();
-        if (chall == "") {
-            alert("인증글을 남겨주세요");
-            return;
-        }
-        let html_temp = `<h1>인증: ${chall}  </h1>`;
-        $("#mychall").append(html_temp);
-
-        $.ajax({
-            type: "GET",
-            url: "/my_chall",
-            data: {},
-            success: function (response) {
-                console.log(response);
-            },
-        });
-    }
 
     function sign_out() {
         $.removeCookie("mytoken", {path: "/"});
@@ -124,6 +120,41 @@
         </div>
     </div>
 </nav>
+{% if title in user_challenges %}
+<div class="card detail-div">
+    <div class="detail-title">
+        <figure>
+            <img src="{{ img }}" alt="Placeholder image" class="detail-img"/>
+        </figure>
+        <div class="title-text detail-people">
+            <h1>{{ title }}</h1>
+            <p>공식 챌린지</p>
+            <p>참가 인원 : 00 명</p>
+            <div>
+                <button class="button is-danger">
+                    챌린지 참가 중
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="detail-desc">
+    <br>
+    <h1>챌린지 설명</h1>
+    <div class="content" id="mychall">{{ desc }}</div>
+</div>
+<div class="shot" id="shot_challenge">
+    <h1>챌린지 인증하기</h1>
+    <button class="button is-primary" onclick="post()">등록</button>
+    <textarea
+            id="chall_text"
+            class="textarea is-primary"
+            placeholder="챌린지 인증글을 남겨주세요"
+    ></textarea>
+</div>
+
+</div>
+{% else %}
 <div class="card detail-div">
     <div class="detail-title">
         <figure>
@@ -146,17 +177,16 @@
     </div>
 
     <div class="shot is-hidden" id="shot_challenge">
-        <div class="modal-content">
-            <h1>챌린지 인증하기</h1>
-            <button class="button is-primary" onclick="post()">등록
-            </button>
-            <textarea
-                    id="chall_text"
-                    class="textarea is-primary"
-                    placeholder="챌린지 인증글을 남겨주세요"
-            ></textarea>
-        </div>
+        <h1>챌린지 인증하기</h1>
+        <button class="button is-primary" onclick="post()">등록</button>
+        <textarea
+                id="chall_text"
+                class="textarea is-primary"
+                placeholder="챌린지 인증글을 남겨주세요"
+        ></textarea>
     </div>
 </div>
+
+{% endif %}
 </body>
 </html>
