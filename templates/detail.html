@@ -4,153 +4,159 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dr. Challenge</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
+            rel="stylesheet"
     />
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
     <link
-      rel="stylesheet"
-      href="path/to/font-awesome/css/font-awesome.min.css"
+            rel="stylesheet"
+            href="path/to/font-awesome/css/font-awesome.min.css"
     />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script
-      src="https://kit.fontawesome.com/8c9eb7dad1.js"
-      crossorigin="anonymous"
+            src="https://kit.fontawesome.com/8c9eb7dad1.js"
+            crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="/static/style.css?after1" type="text/css" />
-  </head>
-  <script>
+    <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
+</head>
+<script>
 
     function shot_report() {
-      alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
-      $("#shot_challenge").toggleClass("is-hidden");
-      $("#btn-hide").hide();
+        alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
+        $("#shot_challenge").addClass("is-active")
+        $("#btn-hide").hide();
 
-      let profile_chall = '{{ title }}'       //클릭했을때
-      let today = new Date().toISOString()    //날짜정보
+        let profile_chall = '{{ title }}'       //클릭했을때
+        let today = new Date().toISOString()    //날짜정보
 
-      $.ajax({
-        type: "post",
-        url: "/my_chall",
-        data: {
-          profile_chal_give: profile_chall,
-          date_give: today
-        },
-        success: function (response) {
-          console.log(response);
-        },
-      });
+        $.ajax({
+            type: "post",
+            url: "/my_chall",
+            data: {
+                profile_chal_give: profile_chall,
+                date_give: today
+            },
+            success: function (response) {
+                console.log(response);
+            },
+        });
     }
 
     function post() {
-      let comment = $("#chall_text").val()
-      let today = new Date().toISOString()
-      $.ajax({
-        type: "POST",
-        url: "/posting",
-        data: {
-          comment_give: comment,
-          date_give: today
-        },
-        success: function (response) {
-          window.location.reload()
-        }
-      })
+        $("#modal-post").removeClass("is-active")
+
+        let comment = $("#chall_text").val()
+        let today = new Date().toISOString()
+        $.ajax({
+            type: "POST",
+            url: "/posting",
+            data: {
+                comment_give: comment,
+                date_give: today
+            },
+            success: function (response) {
+                window.location.reload()
+            }
+        })
     }
 
     function get_text() {
-      let chall = $("#chall_text").val();
-      if (chall == "") {
-        alert("인증글을 남겨주세요");
-        return;
-      }
-      let html_temp = `<h1>인증: ${chall}  </h1>`;
-      $("#mychall").append(html_temp);
+        let chall = $("#chall_text").val();
+        if (chall == "") {
+            alert("인증글을 남겨주세요");
+            return;
+        }
+        let html_temp = `<h1>인증: ${chall}  </h1>`;
+        $("#mychall").append(html_temp);
 
-      $.ajax({
-        type: "GET",
-        url: "/my_chall",
-        data: {},
-        success: function (response) {
-          console.log(response);
-        },
-      });
+        $.ajax({
+            type: "GET",
+            url: "/my_chall",
+            data: {},
+            success: function (response) {
+                console.log(response);
+            },
+        });
     }
+
     function sign_out() {
-      $.removeCookie("mytoken", { path: "/" });
-      alert("로그아웃!");
-      window.location.href = "/login";
+        $.removeCookie("mytoken", {path: "/"});
+        alert("로그아웃!");
+        window.location.href = "/login";
     }
-  </script>
-  <body>
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
+</script>
+<body>
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
         <a class="navbar-logo" href="#">
-          <i class="fas fa-user-md"></i>
+            <i class="fas fa-user-md"></i>
 
         </a>
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="/">
-            <p
-              style="
+            <a class="navbar-item" href="/">
+                <p
+                        style="
                 font-size: 40px;
                 font-weight: 700;
                 color: RGB(147, 190, 236);
               "
-            >
-              Dr. CHALLENGE
-            </p>
-          </a>
+                >
+                    Dr. CHALLENGE
+                </p>
+            </a>
         </div>
         <div class="navbar-end">
-          <div class="navbar-item">
-            <a class="button logout" onclick="sign_out()">
-              <strong>Logout</strong>
-            </a>
-          </div>
+            <div class="navbar-item">
+                <a class="button logout" onclick="sign_out()">
+                    <strong>Logout</strong>
+                </a>
+            </div>
         </div>
-      </div>
-    </nav>
-    <div class="card detail-div">
-      <div class="detail-title">
+    </div>
+</nav>
+<div class="card detail-div">
+    <div class="detail-title">
         <figure>
-          <img src="{{ img }}" alt="Placeholder image" class="detail-img" />
+            <img src="{{ img }}" alt="Placeholder image" class="detail-img"/>
         </figure>
         <div class="title-text detail-people">
-          <h1>{{ title }}</h1>
-          <p>공식 챌린지</p>
-          <p>참가 인원 : 00 명</p>
-          <div id="btn-hide">
-            <button onclick="shot_report()" class="button entrance-btn">
-              참가하기
-            </button>
-          </div>
+            <h1>{{ title }}</h1>
+            <p>공식 챌린지</p>
+            <p>참가 인원 : 00 명</p>
+            <div id="btn-hide">
+                <button onclick="shot_report()" class="button entrance-btn">
+                    참가하기
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="detail-desc">
+    </div>
+    <div class="detail-desc">
         <h1>챌린지 설명</h1>
         <div class="content" id="mychall">{{ desc }}</div>
-      </div>
+    </div>
 
     <div class="shot is-hidden" id="shot_challenge">
-        <h1>챌린지 인증하기</h1>
-        <button class="button is-primary" onclick="post()">등록</button>
-        <textarea
-          id="chall_text"
-          class="textarea is-primary"
-          placeholder="챌린지 인증글을 남겨주세요"
-        ></textarea>
-      </div>
+        <div class="modal-content">
+            <h1>챌린지 인증하기</h1>
+            <button class="button is-primary" onclick="post()">등록
+            </button>
+            <textarea
+                    id="chall_text"
+                    class="textarea is-primary"
+                    placeholder="챌린지 인증글을 남겨주세요"
+            ></textarea>
+        </div>
     </div>
-  </body>
+</div>
+</body>
 </html>
