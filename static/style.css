@@ -1,6 +1,8 @@
 body {
   background-color: rgba(147, 190, 236, 0.5);
   min-height: 100vh;
+  height: auto;
+  color: black;
 }
 
 .section {
@@ -21,19 +23,28 @@ body {
 }
 
 .is-sparta {
-  color: RGB(147, 190, 236) !important;
+  color: RGB(147, 190, 236);
 }
 
+.entrance-btn {
+  color: white;
+  border: none;
+}
 .button.is-sparta {
   background-color: RGB(147, 190, 236);
   border-color: transparent;
-  color: #fff !important;
+  color: #fff;
 }
 
 .button.is-sparta.is-outlined {
   background-color: transparent;
   border-color: RGB(147, 190, 236);
-  color: RGB(147, 190, 236) !important;
+  color: RGB(147, 190, 236);
+}
+.index-content {
+  font-size: 15px;
+  width: 200px;
+  color: black;
 }
 
 .help {
@@ -66,20 +77,24 @@ a {
 }
 
 .card-image {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   background-color: beige;
+  margin: 0;
+  padding: 0;
 }
 
 .card-wrap {
-  margin: 40px 0px 0px 35px;
-  padding: 0px;
+  margin: 40px 0px 30px 35px;
+  padding: 0;
   background-color: white;
+  border-radius: 10px;
 }
 
 .card-content {
   margin: 0;
   padding: 10px;
+  width: 250px;
 }
 
 .card {
@@ -89,5 +104,62 @@ a {
   align-content: flex-start;
   flex-wrap: wrap;
   background-color: rgba(147, 190, 235, 0.8);
-  height: 90vh;
+  height: auto;
+  border-radius: 10px;
+}
+
+.index-img {
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+}
+.index-title {
+  width: 230px;
+  margin-top: 10px;
+}
+.title {
+  color: RGB(147, 190, 236);
+}
+.chall-desc {
+  width: 230px;
+}
+.detail-title {
+  display: flex;
+  width: 100%;
+}
+.detail-div {
+  display: flex;
+  flex-direction: column;
+}
+.detail-img {
+  width: 400px;
+  height: 400px;
+  margin: 50px;
+  margin-left: 100px;
+  border: 5px white solid;
+  border-radius: 20px;
+}
+.detail-desc {
+  margin: 50px;
+  padding-left: 50px;
+  font-size: 20px;
+}
+.detail-people {
+  margin: 40px;
+  font-size: 20px;
+  padding-top: 140px;
+}
+.detail-div h1 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+.detail-div p {
+  margin: 10px;
+}
+#shot_challenge {
+  margin: 100px;
+}
+.entrance-btn {
+  color: black;
 }
