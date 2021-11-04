@@ -1,56 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dr. Challenge</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-            href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
-            rel="stylesheet"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css?after412" type="text/css" />
     <script
-            src="https://kit.fontawesome.com/8c9eb7dad1.js"
-            crossorigin="anonymous"
+      src="https://kit.fontawesome.com/8c9eb7dad1.js"
+      crossorigin="anonymous"
     ></script>
     <script>
-        function sign_out() {
-            $.removeCookie("mytoken", {path: "/"});
-            alert("로그아웃!");
-            window.location.href = "/login";
-        }
-
-
+      function sign_out() {
+        $.removeCookie("mytoken", { path: "/" });
+        alert("로그아웃!");
+        window.location.href = "/login";
+      }
     </script>
-
-</head>
-<body>
-<nav class="navbar is-light" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-logo" href="#">
-            <i class="fas fa-user-md"></i>
+  </head>
+  <body>
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-logo" href="/">
+          <i class="fas fa-user-md"></i>
         </a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="/">
-            <p
-              style="
-                font-size: 40px;
-                font-weight: 700;
-                color: RGB(147, 190, 236);
-              "
-            >
-              Dr. CHALLENGE
-            </p>
+            <p class="nav-title">Dr. CHALLENGE</p>
           </a>
         </div>
         <div class="navbar-end">
@@ -80,12 +65,15 @@
                     class="card text-white bg-info mb-3"
                     style="max-width: 20rem"
                   >
-                    <div class="card-header">참가자</div>
+                    <div class="card-header">
+                      아이디 들어갈 곳 {{user_info.username}}
+                    </div>
                     <div class="card-body">
-                      <h5 class="card-title">Info card title</h5>
+                      <h5 class="card-title">
+                        타이틀 들어갈곳? {{user_info.username}}
+                      </h5>
                       <p class="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
+                        텍스트 들어갈 곳 {{user_info.username}}
                       </p>
                     </div>
                   </div>
@@ -95,31 +83,35 @@
           </div>
         </div>
       </div>
-      {% for challenge in user_challenges %}
-      <div class="card-wrap detail_page">
-        <a href="/detail/{{ challenge.title }}">
-          <div class="card-image">
-            <img
-              src="{{ challenge.url }}"
-              alt="Placeholder image"
-              class="index-img"
-            />
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-4 index-title">{{ challenge.title }}</p>
-                <p class="subtitle is-6">공식 챌린지</p>
+      <div class="card mypage-card">
+        {% for challenge in user_challenges %}
+        <div class="card-wrap detail_page">
+          <a href="/detail/{{ challenge.title }}">
+            <div class="card-image">
+              <img
+                src="{{ challenge.url }}"
+                alt="Placeholder image"
+                class="index-img"
+              />
+            </div>
+            <div class="card-content" style="text-align: center">
+              <div class="media">
+                <div class="media-content">
+                  <p class="title is-4 index-title">{{ challenge.title }}</p>
+                  <p class="subtitle is-6">
+                    {{challenge.participate}} 명 참가중
+                  </p>
+                </div>
+              </div>
+              <div class="content index-content">
+                <p class="chall-desc">{{ challenge.description }}</p>
+                <br />
               </div>
             </div>
-            <div class="content index-content">
-              <p class="chall-desc">{{ challenge.description }}</p>
-              <br />
-            </div>
-          </div>
-        </a>
+          </a>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-</body>
+  </body>
 </html>
