@@ -29,7 +29,7 @@
             crossorigin="anonymous"
     ></script>
 
-    <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css?after122" type="text/css"/>
 </head>
 <script>
 
@@ -90,27 +90,19 @@
 <body>
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-logo" href="#">
+        <a class="navbar-logo" href="/">
           <i class="fas fa-user-md"></i>
         </a>
       </div>
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/">
-                <p
-                        style="
-                font-size: 40px;
-                font-weight: 700;
-                color: RGB(147, 190, 236);
-              "
-                >
-                    Dr. CHALLENGE
-                </p>
+                <p class="nav-title">Dr. CHALLENGE</p>
             </a>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <a class="button mypage" href="/myPage/{{user_info.username}}">
+            <a class="button mypage" href="/myPage/{{username}}">
               <strong>My page</strong>
             </a>
             <a class="button logout" onclick="sign_out()">
@@ -129,7 +121,7 @@
         <div class="title-text detail-people">
             <h1>{{ title }}</h1>
             <p>공식 챌린지</p>
-            <p>참가 인원 : 00 명</p>
+            <p>참가 인원 : {{participate}} 명</p>
             <div>
                 <button class="button is-danger">
                     챌린지 참가 중
@@ -167,7 +159,7 @@
         <div class="title-text detail-people">
             <h1>{{ title }}</h1>
             <p>공식 챌린지</p>
-            <p>참가 인원 : 00 명</p>
+            <p>참가 인원 : {{participate}} 명</p>
             <div id="btn-hide">
                 <button onclick="shot_report()" class="button entrance-btn">
                     참가하기

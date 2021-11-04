@@ -1,87 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap");
+
 profile-body {
-    background: #28527a;
+  background: #28527a;
 }
-
-
-
-.profile-card:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100%;
-    background-color: #CCE5FF;
-    transform: scaleY(1);
-    transition: all 0.5s;
-    transform-origin: bottom
+.profile-card {
+  border: none;
+  width: 400px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #28527a;
+  margin: 50px auto;
 }
-
-.profile-card:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100%;
-    background-color: #3399FF;
-    transform: scaleY(0);
-    transition: all 0.5s;
-    transform-origin: bottom
-}
-
-
-.profile-card:hover::after {
-    transform: scaleY(1)
-}
-
 .fonts {
-    font-size: 11px
+  font-size: 11px;
 }
-
+.is-6 {
+  color: #ff7473;
+  font-size: 18px;
+  font-weight: 600;
+}
 .social-list {
-    display: flex;
-    list-style: none;
-    justify-content: center;
-    padding: 0
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
 }
 
 body {
   background-color: rgba(147, 190, 236, 0.5);
-  min-height: 100vh;
-  height: auto;
+  min-height: 105vh;
+  height: 100%;
   color: black;
 }
 profile-body {
   background: #28527a;
 }
-.profile-card:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background-color: #cce5ff;
-  transform: scaleY(1);
-  transition: all 0.5s;
-  transform-origin: bottom;
-}
-.profile-card:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background-color: #3399ff;
-  transform: scaleY(0);
-  transition: all 0.5s;
-  transform-origin: bottom;
-}
-.profile-card:hover::after {
-  transform: scaleY(1);
-}
+
 .section {
   padding: 1rem 1.5rem;
   max-width: 750px;
@@ -100,14 +56,19 @@ profile-body {
   font-size: 2rem;
 }
 
-.title.is-sparta {
-  color: RGB(147, 190, 236);
+.title {
+  color: #28527a;
+}
+h3 {
+  color: #28527a;
 }
 
 .subtitle.is-sparta {
-  color: RGB(147, 190, 236);
+  color: #28527a;
 }
-
+.is-sparta {
+  color: #28527a;
+}
 .entrance-btn {
   color: white;
   border: none;
@@ -138,12 +99,13 @@ profile-body {
 
 a {
   font-size: 18px;
+  text-decoration: none;
 }
 
 .navbar-logo {
   font-size: 50px;
   margin: 0 20px;
-  color: RGB(147, 190, 236);
+  color: #28527a;
 }
 .logout {
   background-color: white;
@@ -182,6 +144,7 @@ a {
   margin: 0;
   padding: 10px;
   width: 250px;
+  background-color: white;
 }
 
 .card {
@@ -210,6 +173,7 @@ a {
 }
 .chall-desc {
   width: 230px;
+  font-size: 18px;
 }
 .detail-title {
   display: flex;
@@ -252,19 +216,20 @@ a {
   color: black;
 }
 .modal-content {
-    width: 400px;
-    height: 400px;
+  width: 400px;
+  height: 400px;
 }
-.profile-card {
-  border: none;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-left: 200px;
-  background-color: #cceeff;
-}
+
 .my-card {
   display: flex;
   flex-direction: column;
+}
+.nav-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #28527a;
+}
+.mypage-card {
+  box-shadow: none;
+  background-color: RGB(159, 196, 238);
 }
