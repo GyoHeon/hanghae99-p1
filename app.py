@@ -13,9 +13,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-#client = MongoClient('localhost', 27017)
+client = MongoClient('localhost', 27017)
 #client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
-client = MongoClient('mongodb://test:test@localhost', 27017)
+#client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
 # 메인페이지-챌린지 정보 주기__이교헌
@@ -102,7 +102,7 @@ def detail(title_give):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-
+'''
 # 상세페이지 인증글 db에 저장-이한울
 @app.route('/posting', methods=['POST'])
 def posting():
@@ -123,6 +123,31 @@ def posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+'''
+
+#상세페이지 내용 db에저장 참가하기
+@app.route('/posting', methods=['POST'])
+def posting():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        title_receive=request.form["title_give"]
+        comment_receive = request.form["comment_give"]
+        date_receive = request.form["date_give"]
+        doc = {
+            "username": user_info["username"],
+            "profile_name": user_info["profile_name"],
+            "profile_pic_real": user_info["profile_pic_real"],
+            "comment": {user_info["username"]:[]},
+            "date": date_receive,
+        }
+        db.test.insert_one(doc)
+        #db.test.update_one({'title':title_receive},{'$push':{'comment':{user_info["username"]:comment_receive}}})
+
+        return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
       
 # 상세페이지 참가 db에 저장 - 이한울
@@ -137,7 +162,15 @@ def my_chall():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-      
+
+
+# 마이페이지이동 - 이교헌
+@app.route('/myPage/<username>')
+def mypage(username):
+    user_challenges_title = db.users.find_one({"username": username})["profile_chall"]
+    user_challenges = db.chall.find({'title':{'$in':user_challenges_title}})
+    return render_template('detail.html', user_challenges=user_challenges)
+
       
 '''
 # 뱃지 시스템 - 이교헌
@@ -151,4 +184,4 @@ def badge():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8000, debug=True)
