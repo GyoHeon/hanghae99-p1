@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dr. Challenge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -28,6 +28,7 @@
             src="https://kit.fontawesome.com/8c9eb7dad1.js"
             crossorigin="anonymous"
     ></script>
+
     <link rel="stylesheet" href="/static/style.css?after1" type="text/css"/>
 </head>
 <script>
@@ -58,32 +59,27 @@
             },
         });
     }
-
     function post() {
-        let comment = $("#chall_text").val()
-        let today = new Date()
-        let current = today.toISOString()
-
-        let year = today.getFullYear()
-        let month = today.getMonth()
-        let date = today.getDate();
-        let day = today.getDay()
-        let hours = today.getHours()
-
-        if (comment == "") {
+      let comment = $("#chall_text").val();
+      let today = new Date().toISOString();
+  
+      if (comment == "") {
             alert("인증글을 남겨주세요");
             return;
         }
-        let html_temp = `<br><span>${year}.${month}.${date}.${day}.${hours}  ${comment}</span>`;
-        $("#mychall").append(html_temp);
-        $.ajax({
-            type: "POST",
-            url: "/posting",
-            data: {
-                comment_give: comment,
-                date_give: current
-            },
-            success: function (response) {
+  
+      $.ajax({
+        type: "POST",
+        url: "/posting",
+        data: {
+          comment_give: comment,
+          date_give: today,
+        },
+        success: function (response) {
+          window.location.reload();
+        },
+      });
+    }
 
             }
         })
@@ -100,11 +96,10 @@
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-logo" href="#">
-            <i class="fas fa-user-md"></i>
-
+          <i class="fas fa-user-md"></i>
         </a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/">
                 <p
@@ -119,11 +114,14 @@
             </a>
         </div>
         <div class="navbar-end">
-            <div class="navbar-item">
-                <a class="button logout" onclick="sign_out()">
-                    <strong>Logout</strong>
-                </a>
-            </div>
+          <div class="navbar-item">
+            <a class="button mypage" href="/myPage/{{user_info.username}}">
+              <strong>My page</strong>
+            </a>
+            <a class="button logout" onclick="sign_out()">
+              <strong>Logout</strong>
+            </a>
+          </div>
         </div>
     </div>
 </nav>
@@ -192,7 +190,7 @@
         <div class="content" id="mychall">{{ desc }}</div>
     </div>
 
-    <div class="shot is-hidden" id="shot_challenge">
+      <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
         <div class="mb-3">

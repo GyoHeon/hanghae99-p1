@@ -98,11 +98,11 @@ def detail(title_give):
         challenge = db.chall.find_one({"title": title_give}, {"_id": False})
         img = challenge["url"]
         desc = challenge["description"]
-        return render_template('detail.html', title=title_give, img=img, desc=desc, user_challenges=user_challenges)
+        return render_template('detail.html', title=title_give, img=img, desc=desc, user_challenges=user_challenges, user_info=db.users.find_one({"username": payload["id"]})['username'])
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-
+'''
 # 상세페이지 인증글 db에 저장-이한울
 @app.route('/posting', methods=['POST'])
 def posting():
@@ -123,6 +123,7 @@ def posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+'''
 
 
 # 상세페이지 참가 db에 저장 - 이한울
@@ -133,12 +134,20 @@ def my_chall():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         profile_chall_receive = request.form["profile_chall_give"]
-        db.users.update_one({'username': user_info["username"]}, {'$push': {'profile_chall': profile_chall_receive}})
+        db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
 
+# 마이페이지이동 - 이교헌
+@app.route('/myPage/<username>')
+def mypage(username):
+    user_challenges_title = db.users.find_one({"username": username})["profile_chall"]
+    user_challenges = db.chall.find({'title':{'$in':user_challenges_title}})
+    return render_template('mypage.html', user_challenges=user_challenges)
+
+      
 '''
 # 뱃지 시스템 - 이교헌
 @app.route('/my_badges', method=['GET'])
