@@ -33,9 +33,9 @@
 </head>
 <script>
 
-    // $(document).ready(function () {
-    //     bsCustomFileInput.init()
-    // })
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
 
     function shot_report() {
         alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
@@ -65,11 +65,8 @@
         let title = '{{ title }}'                      //2중배열  인증글 위한 title 필요해서 추가한것
         if (comment == "") {
         alert("인증글을 남겨주세요");
-
-
         return;
       }
-
         $.ajax({
             type: "POST",
             url: "/posting",
@@ -141,14 +138,13 @@
 <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
     <button class="button is-primary" onclick="post()">등록</button>
-
     <textarea
             id="chall_text"
             class="textarea is-primary"
             placeholder="챌린지 인증글을 남겨주세요"
     ></textarea>
 </div>
-<li>{{review}} </li>
+
 </div>
 {% else %}
 <div class="card detail-div">
@@ -178,10 +174,8 @@
     </div>
 
       <div class="shot is-hidden" id="shot_challenge">
-        <h1 id="posting-text">챌린지 인증하기</h1>
-
+        <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
-        <li>{{review}} </li>
         <textarea
                 id="chall_text"
                 class="textarea is-primary"

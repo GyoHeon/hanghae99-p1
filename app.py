@@ -13,9 +13,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('localhost', 27017)
-# client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
-# client = MongoClient('mongodb://test:test@localhost', 27017)
+#client = MongoClient('localhost', 27017)
+client = MongoClient('15.165.158.230', 27017, username="test", password="test")
+#client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
 
@@ -95,17 +95,16 @@ def detail(title_give):
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
-        username = user_info["username"]  # 상세페이지에서 마이프로필 가기위한 username
+        user_info = db.users.find_one({"username":payload["id"]})
+        username = user_info["username"]             #상세페이지에서 마이프로필 가기위한 username
         profile_chall = user_info["profile_chall"]
         challenge = db.chall.find_one({"title": title_give}, {"_id": False})
         participate = challenge["participate"]
         img = challenge["url"]
         desc = challenge["description"]
-        review = challenge["comment"]  # 상세페이지 인증글 db내용
+        review = challenge["comment"]               #상세페이지 인증글 db내용
 
-        return render_template('detail.html', title=title_give, img=img, desc=desc, review=review, username=username,
-                               participate=participate, profile_chall=profile_chall)
+        return render_template('detail.html',title=title_give, img=img, desc=desc,review=review,username=username,participate=participate, profile_chall=profile_chall)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -128,7 +127,6 @@ def posting():
             "profile_pic_real": user_info["profile_pic_real"],
             "comment": [],
             "date": date_receive,
-
         }
         #db.chall.insert_one(doc)                       #2중배열 인증글 db 입력
         db.chall.update_one({'title':title_receive},{'$push':{'comment':{user_info["username"]:comment_receive}}})       #2중배열 인증글 db 업데이트 입력
@@ -147,9 +145,9 @@ def my_chall():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         profile_chall_receive = request.form["profile_chall_give"]
-        participate = db.chall.find_one({"title": profile_chall_receive})["participate"]
-        db.chall.update_one({'title': profile_chall_receive}, {'$inc': {'participate': 1}})
-        db.users.update_one({'username': user_info["username"]}, {'$push': {'profile_chall': profile_chall_receive}})
+        participate = db.chall.find_one({"title":profile_chall_receive})["participate"]
+        db.chall.update_one({'title':profile_chall_receive}, {'$inc':{'participate' : 1}})
+        db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
@@ -165,22 +163,22 @@ def main(username):
         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
         user_info = db.users.find_one({"username": username}, {"_id": False})
         user_challenges_title = user_info["profile_chall"]
-        user_challenges = db.chall.find({'title': {'$in': user_challenges_title}}).sort("participate", -1)
+        user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
         return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges)
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
-
+      
+      
 '''
 # 뱃지 시스템 - 이교헌
 @app.route('/my_badges', method=['GET'])
 def badge():
     all_day = request.form['days_give']
     #이거 우짬
-    now_day = db.users.
+    now_day = db.chall.
     progress = now_day//all_day
 '''
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
