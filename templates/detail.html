@@ -189,7 +189,16 @@
         ></textarea>
     </div>
 </div>
-
 {% endif %}
+
+<div>
+{% for comment in comments %}
+<div>
+<span>{{comment.username}}</span>
+<span>{{comment.comment}}</span>
+</div>
+{% endfor %}
+</div>
+
 </body>
 </html>
