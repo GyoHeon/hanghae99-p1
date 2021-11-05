@@ -233,3 +233,10 @@ a {
   box-shadow: none;
   background-color: RGB(159, 196, 238);
 }
+
+.profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: aqua;
+}

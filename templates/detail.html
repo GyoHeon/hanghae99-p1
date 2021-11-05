@@ -135,6 +135,7 @@
     <br>
     <h1>챌린지 설명</h1>
     <div class="content" id="mychall">{{ desc }}</div>
+
 </div>
 <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
@@ -145,6 +146,21 @@
             class="textarea is-primary"
             placeholder="챌린지 인증글을 남겨주세요"
     ></textarea>
+    <table class="table is-striped is-narrow is-bordered ">
+        <thead><h1> 챌린지 인증</h1></thead>
+
+        {% for comment in comments %}
+      <tr>
+            <td>
+                <img src="#" class="profile-img" style="margin: 0 20px 0 20px">
+
+                <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
+                <span style="font-size: 25px">{{comment.comment}}</span>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
 </div>
 
 {% else %}
@@ -172,17 +188,7 @@
     <div class="detail-desc">
         <h1>챌린지 설명</h1>
         <div class="content" id="mychall">{{ desc }}</div>
-        <table class="table">
-            <th>챌린지 인증</th>
-            <tr>
-                {% for comment in comments %}
-                <td>
-                    <span>{{comment.username}}</span>
-                    <span>{{comment.comment}}</span>
-                </td>
-                {% endfor %}
-            </tr>
-        </table>
+
     </div>
 
     <div class="shot is-hidden" id="shot_challenge">
@@ -194,7 +200,24 @@
                 placeholder="챌린지 인증글을 남겨주세요"
         ></textarea>
     </div>
+    <table class="table is-striped is-narrow is-bordered ">
+        <thead> <h1>챌린지 인증</h1></thead>
+
+        {% for comment in comments %}
+        <tr>
+            <td>
+                <img src="#" class="profile-img">
+            </td>
+            <td>
+                <span>{{comment.username}}</span>
+                <span>{{comment.comment}}</span>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
 </div>
+
 {% endif %}
 
 

@@ -137,7 +137,7 @@ def main(username):
         user_challenges_title = user_info["profile_chall"]
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
         #num_comment = db.chall.find({'title':{'$in':user_challenges_title}})
-        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges, num_comment=num_comment)
+        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges,)
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
