@@ -129,7 +129,7 @@ def posting():
             "comment": [],
             "date": date_receive,
         }
-        #db.chall.insert_one(doc)                       #2중배열 인증글 db 입력
+        db.comment.insert_one(doc)                       #2중배열 인증글 db 입력
         db.chall.update_one({'title':title_receive},{'$push':{'comment':{user_info["username"]:comment_receive}}})       #2중배열 인증글 db 업데이트 입력
 
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
