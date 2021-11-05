@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import pymongo
 import jwt
 import datetime
 import hashlib
@@ -25,7 +26,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        challenges = list(db.chall.find({}, {"_id": False}))
+        challenges = db.chall.find({}, {"_id": False}).sort('participate', -1)
         return render_template('index.html', user_info=user_info, challenges=challenges)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -98,16 +99,17 @@ def detail(title_give):
         username = user_info["username"]             #상세페이지에서 마이프로필 가기위한 username
 
         challenge = db.chall.find_one({"title": title_give}, {"_id": False})
+        participate = challenge["participate"]
         img = challenge["url"]
         desc = challenge["description"]
         review = challenge["comment"]               #상세페이지 인증글 db내용
 
-        return render_template('detail.html',title=title_give, img=img, desc=desc,review=review,username=username)
+        return render_template('detail.html',title=title_give, img=img, desc=desc,review=review,username=username,participate=participate)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-      
-      
 
+
+'''
 # 상세페이지 내용 db에저장 참가하기  2021/11/04
 # 상세페이지 인증글 db에 저장-이한울
 @app.route('/posting', methods=['POST'])
@@ -133,7 +135,7 @@ def posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
+'''
 
 
 # 상세페이지 참가 db에 저장 - 이한울
@@ -144,6 +146,8 @@ def my_chall():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         profile_chall_receive = request.form["profile_chall_give"]
+        participate = db.chall.find_one({"title":profile_chall_receive})["participate"]
+        db.chall.update_one({'title':profile_chall_receive}, {'$inc':{'participate' : 1}})
         db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -160,7 +164,7 @@ def main(username):
         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
         user_info = db.users.find_one({"username": username}, {"_id": False})
         user_challenges_title = user_info["profile_chall"]
-        user_challenges = db.chall.find({'title':{'$in':user_challenges_title}})
+        user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
         return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges)
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -178,4 +182,4 @@ def badge():
 '''
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8000, debug=True)
