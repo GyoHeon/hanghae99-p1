@@ -38,7 +38,6 @@
     })
 
 
-
     function shot_report() {
         alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
 
@@ -140,10 +139,6 @@
 <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
 
-    {% for memo in review %}
-
-    <p>{{memo.keys()}}:{{memo.values()}}</p>
-    {% endfor %}
     <button class="button is-primary" onclick="post()">등록</button>
     <textarea
             id="chall_text"
@@ -177,6 +172,17 @@
     <div class="detail-desc">
         <h1>챌린지 설명</h1>
         <div class="content" id="mychall">{{ desc }}</div>
+        <table class="table">
+            <th>챌린지 인증</th>
+            <tr>
+                {% for comment in comments %}
+                <td>
+                    <span>{{comment.username}}</span>
+                    <span>{{comment.comment}}</span>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
     </div>
 
     <div class="shot is-hidden" id="shot_challenge">
@@ -191,14 +197,6 @@
 </div>
 {% endif %}
 
-<div>
-{% for comment in comments %}
-<div>
-<span>{{comment.username}}</span>
-<span>{{comment.comment}}</span>
-</div>
-{% endfor %}
-</div>
 
 </body>
 </html>
