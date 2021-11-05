@@ -107,7 +107,7 @@ def detail(title_give):
         return redirect(url_for("home"))
       
       
-'''
+
 # 상세페이지 내용 db에저장 참가하기  2021/11/04
 # 상세페이지 인증글 db에 저장-이한울
 @app.route('/posting', methods=['POST'])
@@ -133,7 +133,7 @@ def posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-'''
+
 
 
 # 상세페이지 참가 db에 저장 - 이한울
@@ -152,17 +152,16 @@ def my_chall():
 
 # 마이페이지 렌더링 코드 - 이한울 2021/11/04
 # 참가한 챌린지 목록 끌고 오기
-@app.route('/mypage/<username>')
+@app.route('/myPage/<username>')
 def main(username):
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
         user_info = db.users.find_one({"username": username}, {"_id": False})
-        profile_challs = user_info["profile_chall"]
         user_challenges_title = user_info["profile_chall"]
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}})
-        return render_template('main.html', user_info=user_info, status=status, user_challenges=user_challenges)
+        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges)
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
