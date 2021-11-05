@@ -13,8 +13,8 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-#client = MongoClient('localhost', 27017)
-client = MongoClient('15.165.158.230', 27017, username="test", password="test")
+client = MongoClient('localhost', 27017)
+#client = MongoClient('15.165.158.230', 27017, username="test", password="test")
 #client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
@@ -103,10 +103,38 @@ def detail(title_give):
         img = challenge["url"]
         desc = challenge["description"]
         comments = db.comment.find({"title":title_give}).sort("date", -1)
-
-        return render_template('detail.html',title=title_give, img=img, desc=desc,username=username,participate=participate, profile_chall=profile_chall, comments=comments)
+        profile_pics = user_info["profile_pic_real"]  # 디테일 가져다 쓰세요 <img class="is-rounded" src="{{ url_for('static', filename=profile_pics) }}">
+        return render_template('detail.html',title=title_give, img=img, desc=desc,comments=comments,username=username,participate=participate, profile_chall=profile_chall,profile_pics=profile_pics)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
+
+# 상세페이지 내용 db에저장 참가하기  2021/11/04
+# 상세페이지 인증글 db에 저장-이한울
+@app.route('/posting', methods=['POST'])
+def posting():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        title_receive=request.form["title_give"]
+        comment_receive = request.form["comment_give"]
+        date_receive = request.form["date_give"]
+        doc = {
+            "username": user_info["username"],
+            "profile_name": user_info["profile_name"],
+            "profile_pic_real": user_info["profile_pic_real"],
+            "comment": [],
+            "date": date_receive,
+        }
+        #db.chall.insert_one(doc)                       #2중배열 인증글 db 입력
+        db.chall.update_one({'title':title_receive},{'$push':{'comment':{user_info["username"]:comment_receive}}})       #2중배열 인증글 db 업데이트 입력
+
+        return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+
 
 
 # 상세페이지 참가 db에 저장 - 이한울
@@ -127,6 +155,8 @@ def my_chall():
 
 # 마이페이지 렌더링 코드 - 이한울 2021/11/04
 # 참가한 챌린지 목록 끌고 오기
+# 마이페이지 렌더링 코드 - 이교헌 2021/11/05
+# 코멘트 넘겨서 성취도 확인
 @app.route('/myPage/<username>')
 def main(username):
     token_receive = request.cookies.get('mytoken')
@@ -138,7 +168,33 @@ def main(username):
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
         num_comment = db.comment.find({'title':{'$in':user_challenges_title}, 'username':username})
         return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges, num_comment=num_comment)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
+
+#마이프로필 변경 -사진.소개.닉네임 -이한울 2021/11/05
+@app.route('/update_profile', methods=['POST'])
+def save_img():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        username = payload["id"]
+        name_receive = request.form["name_give"]
+        about_receive = request.form["about_give"]
+        new_doc = {
+            "profile_name": name_receive,
+            "profile_info": about_receive
+        }
+        if 'file_give' in request.files:
+            file = request.files["file_give"]
+            filename = secure_filename(file.filename)
+            extension = filename.split(".")[-1]
+            file_path = f"profile_pics/{username}.{extension}"
+            file.save("./static/"+file_path)
+            new_doc["profile_pic"] = filename
+            new_doc["profile_pic_real"] = file_path
+        db.users.update_one({'username': payload['id']}, {'$set':new_doc})
+        return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
       
