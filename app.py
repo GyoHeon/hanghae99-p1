@@ -102,13 +102,11 @@ def detail(title_give):
         participate = challenge["participate"]
         img = challenge["url"]
         desc = challenge["description"]
-        review = challenge["comment"]               #상세페이지 인증글 db내용
+        comments = db.comment.find({"title":title_give}).sort("date", -1)
         profile_pics = user_info["profile_pic_real"]  # 디테일 가져다 쓰세요 <img class="is-rounded" src="{{ url_for('static', filename=profile_pics) }}">
-
-        return render_template('detail.html',title=title_give, img=img, desc=desc,review=review,username=username,participate=participate, profile_chall=profile_chall,profile_pics=profile_pics)
+        return render_template('detail.html',title=title_give, img=img, desc=desc,comments=comments,username=username,participate=participate, profile_chall=profile_chall,profile_pics=profile_pics)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
 
 
 # 상세페이지 내용 db에저장 참가하기  2021/11/04
@@ -138,6 +136,7 @@ def posting():
 
 
 
+
 # 상세페이지 참가 db에 저장 - 이한울
 @app.route('/my_chall', methods=['POST'])
 def my_chall():
@@ -156,6 +155,8 @@ def my_chall():
 
 # 마이페이지 렌더링 코드 - 이한울 2021/11/04
 # 참가한 챌린지 목록 끌고 오기
+# 마이페이지 렌더링 코드 - 이교헌 2021/11/05
+# 코멘트 넘겨서 성취도 확인
 @app.route('/myPage/<username>')
 def main(username):
     token_receive = request.cookies.get('mytoken')
@@ -165,8 +166,8 @@ def main(username):
         user_info = db.users.find_one({"username": username}, {"_id": False})
         user_challenges_title = user_info["profile_chall"]
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
-        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges)
-
+        num_comment = db.comment.find({'title':{'$in':user_challenges_title}, 'username':username})
+        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges, num_comment=num_comment)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -198,15 +199,5 @@ def save_img():
         return redirect(url_for("home"))
       
       
-'''
-# 뱃지 시스템 - 이교헌
-@app.route('/my_badges', method=['GET'])
-def badge():
-    all_day = request.form['days_give']
-    #이거 우짬
-    now_day = db.chall.
-    progress = now_day//all_day
-'''
-
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8000, debug=True)

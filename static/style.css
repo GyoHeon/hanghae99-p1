@@ -134,7 +134,7 @@ a {
 }
 
 .card-wrap {
-  margin: 40px 0px 30px 35px;
+  margin: 40px 20px 30px 20px;
   padding: 0;
   background-color: white;
   border-radius: 10px;
@@ -232,4 +232,11 @@ a {
 .mypage-card {
   box-shadow: none;
   background-color: RGB(159, 196, 238);
+}
+
+.profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: aqua;
 }
