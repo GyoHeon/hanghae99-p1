@@ -103,7 +103,6 @@ def detail(title_give):
         img = challenge["url"]
         desc = challenge["description"]
         comments = db.comment.find({"title":title_give}).sort("date", -1)
-
         return render_template('detail.html',title=title_give, img=img, desc=desc,username=username,participate=participate, profile_chall=profile_chall, comments=comments)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
@@ -136,9 +135,8 @@ def main(username):
         user_info = db.users.find_one({"username": username}, {"_id": False})
         user_challenges_title = user_info["profile_chall"]
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
-        #num_comment = db.chall.find({'title':{'$in':user_challenges_title}})
-        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges,)
-
+        num_comment = db.comment.find({'title':{'$in':user_challenges_title}, 'username':username})
+        return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges, num_comment=num_comment)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
       
