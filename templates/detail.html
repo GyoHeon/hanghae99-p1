@@ -143,14 +143,14 @@
     <button class="button is-primary" onclick="post()">등록</button>
     <textarea
             id="chall_text"
-            class="textarea is-primary" 
+            class="textarea is-primary"
             placeholder="챌린지 인증글을 남겨주세요"
     ></textarea>
     <table class="table is-striped is-narrow is-bordered ">
         <thead><h1> 챌린지 인증</h1></thead>
 
         {% for comment in comments %}
-      <tr>
+        <tr>
             <td>
                 <img src="#" class="profile-img" style="margin: 0 20px 0 20px">
 
@@ -201,16 +201,15 @@
         ></textarea>
     </div>
     <table class="table is-striped is-narrow is-bordered ">
-        <thead> <h1>챌린지 인증</h1></thead>
+        <thead><h1>챌린지 인증</h1></thead>
 
         {% for comment in comments %}
         <tr>
             <td>
-                <img src="#" class="profile-img">
-            </td>
-            <td>
-                <span>{{comment.username}}</span>
-                <span>{{comment.comment}}</span>
+                <img src="#" class="profile-img" style="margin: 0 20px 0 20px">
+
+                <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
+                <span style="font-size: 25px">{{comment.comment}}</span>
             </td>
         </tr>
         {% endfor %}
