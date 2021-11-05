@@ -13,8 +13,8 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('localhost', 27017)
-#client = MongoClient('15.165.158.230', 27017, username="test", password="test")
+#client = MongoClient('localhost', 27017)
+client = MongoClient('15.165.158.230', 27017, username="test", password="test")
 #client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
@@ -127,8 +127,7 @@ def posting():
             "comment": [],
             "date": date_receive,
         }
-        #db.chall.insert_one(doc)                       #2중배열 인증글 db 입력
-        db.chall.update_one({'title':title_receive},{'$push':{'comment':{user_info["username"]:comment_receive}}})       #2중배열 인증글 db 업데이트 입력
+        db.chall.insert_one(doc)                       #2중배열 인증글 db 입력
 
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
