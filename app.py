@@ -109,7 +109,7 @@ def detail(title_give):
         return redirect(url_for("home"))
 
 
-'''
+
 # 상세페이지 내용 db에저장 참가하기  2021/11/04
 # 상세페이지 인증글 db에 저장-이한울
 @app.route('/posting', methods=['POST'])
@@ -134,7 +134,7 @@ def posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-'''
+
 
 
 # 상세페이지 참가 db에 저장 - 이한울
