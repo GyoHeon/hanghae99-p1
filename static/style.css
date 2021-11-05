@@ -240,3 +240,11 @@ a {
   border-radius: 50%;
   background-color: aqua;
 }
+
+.card-hover {
+  transition: all .2s ease-in-out
+}
+
+.card-hover:hover {
+  transform: scale(1.2)
+}

@@ -152,7 +152,7 @@
         {% for comment in comments %}
         <tr>
             <td>
-                <img src="#" class="profile-img" style="margin: 0 20px 0 20px">
+                <img src="{{profile_pics}}" class="profile-img" style="margin: 0 20px 0 20px">
 
                 <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
                 <span style="font-size: 25px">{{comment.comment}}</span>
@@ -202,18 +202,14 @@
     </div>
     <table class="table is-striped is-narrow is-bordered ">
         <thead><h1>챌린지 인증</h1></thead>
-
         {% for comment in comments %}
         <tr>
             <td>
-                <img src="#" class="profile-img" style="margin: 0 20px 0 20px">
-
+                <img src="{{profile_pics}}" class="profile-img" style="margin: 0 20px 0 20px">
                 <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
                 <span style="font-size: 25px">{{comment.comment}}</span>
             </td>
         </tr>
-        {% endfor %}
-
     </table>
 </div>
 
