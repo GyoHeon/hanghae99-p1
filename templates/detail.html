@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Dr. Challenge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -37,6 +37,7 @@
         bsCustomFileInput.init()
     })
 
+
     function shot_report() {
         alert(`'{{ title }}'에 정말 참가하시겠습니까?'`);
 
@@ -64,9 +65,9 @@
         let today = new Date().toISOString()
         let title = '{{ title }}'                      //2중배열  인증글 위한 title 필요해서 추가한것
         if (comment == "") {
-        alert("인증글을 남겨주세요");
-        return;
-      }
+            alert("인증글을 남겨주세요");
+            return;
+        }
         $.ajax({
             type: "POST",
             url: "/posting",
@@ -76,7 +77,7 @@
                 date_give: today
             },
             success: function (response) {
-              window.location.reload();
+                window.location.reload();
             }
         })
     }
@@ -91,24 +92,24 @@
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-logo" href="/">
-          <i class="fas fa-user-md"></i>
+            <i class="fas fa-user-md"></i>
         </a>
-      </div>
-      <div id="navbarBasicExample" class="navbar-menu">
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/">
                 <p class="nav-title">Dr. CHALLENGE</p>
             </a>
         </div>
         <div class="navbar-end">
-          <div class="navbar-item">
-            <a class="button mypage" href="/myPage/{{username}}">
-              <strong>My page</strong>
-            </a>
-            <a class="button logout" onclick="sign_out()">
-              <strong>Logout</strong>
-            </a>
-          </div>
+            <div class="navbar-item">
+                <a class="button mypage" href="/myPage/{{username}}">
+                    <strong>My page</strong>
+                </a>
+                <a class="button logout" onclick="sign_out()">
+                    <strong>Logout</strong>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
@@ -134,18 +135,34 @@
     <br>
     <h1>챌린지 설명</h1>
     <div class="content" id="mychall">{{ desc }}</div>
+
 </div>
 <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
+
     <button class="button is-primary" onclick="post()">등록</button>
     <textarea
             id="chall_text"
-            class="textarea is-primary"
+            class="textarea is-primary" 
             placeholder="챌린지 인증글을 남겨주세요"
     ></textarea>
+    <table class="table is-striped is-narrow is-bordered ">
+        <thead><h1> 챌린지 인증</h1></thead>
+
+        {% for comment in comments %}
+      <tr>
+            <td>
+                <img src="#" class="profile-img" style="margin: 0 20px 0 20px">
+
+                <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
+                <span style="font-size: 25px">{{comment.comment}}</span>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
 </div>
 
-</div>
 {% else %}
 <div class="card detail-div">
     <div class="detail-title">
@@ -171,9 +188,10 @@
     <div class="detail-desc">
         <h1>챌린지 설명</h1>
         <div class="content" id="mychall">{{ desc }}</div>
+
     </div>
 
-      <div class="shot is-hidden" id="shot_challenge">
+    <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
         <textarea
@@ -182,8 +200,26 @@
                 placeholder="챌린지 인증글을 남겨주세요"
         ></textarea>
     </div>
+    <table class="table is-striped is-narrow is-bordered ">
+        <thead> <h1>챌린지 인증</h1></thead>
+
+        {% for comment in comments %}
+        <tr>
+            <td>
+                <img src="#" class="profile-img">
+            </td>
+            <td>
+                <span>{{comment.username}}</span>
+                <span>{{comment.comment}}</span>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
 </div>
 
 {% endif %}
+
+
 </body>
 </html>

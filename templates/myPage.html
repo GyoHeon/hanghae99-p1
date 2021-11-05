@@ -227,8 +227,14 @@
                   </p>
                 </div>
               </div>
+
               <div class="content index-content">
-                <p class="chall-desc">{{ challenge.description }}</p>
+                {% set num = namespace(items=0) %}{% for comment in
+                num_comment.rewind() %}{% if comment.title == challenge.title %}
+                {% set num.items = num.items + 1 %}{% endif %}{% endfor %} {%
+                set percentage = num.items*100//challenge.days %} {% if
+                percentage >= 100 %} {% set percentage = 100 %} {% endif %} {{
+                percentage }}%
                 <br />
               </div>
             </div>
