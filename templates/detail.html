@@ -112,7 +112,7 @@
         </div>
     </div>
 </nav>
-{% if title in user_challenges %}
+{% if title in profile_chall %}
 <div class="card detail-div">
     <div class="detail-title">
         <figure>
@@ -138,10 +138,6 @@
 <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
     <button class="button is-primary" onclick="post()">등록</button>
-    <div class="mb-3">
-        <label for="formFile" class="form-label"> </label>
-        <input class="form-control" type="file" id="formFile">
-    </div>
     <textarea
             id="chall_text"
             class="textarea is-primary"
@@ -180,10 +176,6 @@
       <div class="shot is-hidden" id="shot_challenge">
         <h1>챌린지 인증하기</h1>
         <button class="button is-primary" onclick="post()">등록</button>
-        <div class="mb-3">
-            <label for="formFile" class="form-label"></label>
-            <input class="form-control" type="file" id="formFile">
-        </div>
         <textarea
                 id="chall_text"
                 class="textarea is-primary"
