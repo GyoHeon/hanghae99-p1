@@ -1,88 +1,78 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dr. Challenge</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="/static/style.css?after222" type="text/css" />
-    <script
-      src="https://kit.fontawesome.com/8c9eb7dad1.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      function sign_out() {
-        $.removeCookie("mytoken", { path: "/" });
-        alert("로그아웃!");
-        window.location.href = "/login";
-      }
-    </script>
-  </head>
-  <body>
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-logo" href="/">
-          <i class="fas fa-user-md"></i>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dr. Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <link rel="stylesheet" href="/static/style.css?new" type="text/css" />
+  <script src="https://kit.fontawesome.com/8c9eb7dad1.js" crossorigin="anonymous"></script>
+  <script>
+    function sign_out() {
+      $.removeCookie("mytoken", { path: "/" });
+      alert("로그아웃!");
+      window.location.href = "/login";
+    }
+  </script>
+</head>
+
+<body>
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-logo" href="/">
+        <i class="fas fa-user-md"></i>
+      </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="/">
+          <p class="nav-title">Dr. CHALLENGE</p>
         </a>
       </div>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item" href="/">
-            <p class="nav-title">Dr. CHALLENGE</p>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <h2 class="nav-name">{{user_info.username}}</h2>
+          <a class="button mypage" href="/myPage/{{user_info.username}}">
+            <strong>My page</strong>
+          </a>
+          <a class="button logout" onclick="sign_out()">
+            <strong>Logout</strong>
           </a>
         </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <a class="button mypage" href="/myPage/{{user_info.username}}">
-              <strong>My page</strong>
-            </a>
-            <a class="button logout" onclick="sign_out()">
-              <strong>Logout</strong>
-            </a>
+      </div>
+    </div>
+  </nav>
+  <div class="card">
+    {% for challenge in challenges %}
+    <div class="card-wrap detail_page card-hover">
+      <a href="/detail/{{ challenge.title }}">
+        <div class="card-image">
+          <img src="{{ challenge.url }}" alt="Placeholder image" class="index-img" />
+        </div>
+        <div class="card-content" style="text-align: center">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4 index-title">{{ challenge.title }}</p>
+              <p class="subtitle is-6">
+                {{ challenge.participate }} 명 참가중
+              </p>
+            </div>
+          </div>
+          <div class="content index-content">
+            <p class="chall-desc">{{ challenge.description }}</p>
+            <br />
           </div>
         </div>
-      </div>
-    </nav>
-    <div class="card">
-      {% for challenge in challenges %}
-            <!--   챌린지 카드 scale 움직임   -->
-      <div class="card-wrap detail_page card-hover">
-        <a href="/detail/{{ challenge.title }}">
-          <div class="card-image">
-            <img
-              src="{{ challenge.url }}"
-              alt="Placeholder image"
-              class="index-img"
-            />
-          </div>
-          <div class="card-content" style="text-align: center">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-4 index-title">{{ challenge.title }}</p>
-                <p class="subtitle is-6">
-                  {{ challenge.participate }} 명 참가중
-                </p>
-              </div>
-            </div>
-            <div class="content index-content">
-              <p class="chall-desc">{{ challenge.description }}</p>
-              <br />
-            </div>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+      </a>
     </div>
-  </body>
+    {% endfor %}
+  </div>
+</body>
+
 </html>
