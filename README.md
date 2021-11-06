@@ -12,7 +12,7 @@
 
 **Dr.Challenge**
 
-([challenge](http://leegyoheon.shop/))
+[Dr.challenge](http://leegyoheon.shop/)
 ---
 설명
 
