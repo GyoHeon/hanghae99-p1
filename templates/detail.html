@@ -206,7 +206,7 @@
         {% for comment in comments %}
         <tr>
             <td>
-                <img src="#" class="profile-img">
+                <img src="{{ url_for('static', filename=profile_pics) }}" class="profile-img">
             </td>
             <td>
                 <span>{{comment.username}}</span>

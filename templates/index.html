@@ -56,7 +56,8 @@
     </nav>
     <div class="card">
       {% for challenge in challenges %}
-      <div class="card-wrap detail_page">
+            <!--   챌린지 카드 scale 움직임   -->
+      <div class="card-wrap detail_page card-hover">
         <a href="/detail/{{ challenge.title }}">
           <div class="card-image">
             <img
