@@ -181,11 +181,17 @@ def main(username):
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+        # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+        status = (username == payload["id"])
+        # 해당 유저 DB.
         user_info = db.users.find_one({"username": username}, {"_id": False})
+        # 해당 유저가 참가한 챌린지한 title 정보
         user_challenges_title = user_info["profile_chall"]
+        # 해당 유저가 참가한 챌린지를 참가인원이 많은 순으로 내려 받기.
         user_challenges = db.chall.find({'title':{'$in':user_challenges_title}}).sort("participate", -1)
+        # 해당 유저가 참가한 챌린지 인증글 횟수 내려받기.
         num_comment = db.comment.find({'title':{'$in':user_challenges_title}, 'username':username})
+        #myPage로 정보전달
         return render_template('myPage.html', user_info=user_info, status=status, user_challenges=user_challenges, num_comment=num_comment)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
@@ -198,25 +204,35 @@ def save_img():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         username = payload["id"]
+        # 유저 이름
         name_receive = request.form["name_give"]
+        # '나는 누구?' 내용
         about_receive = request.form["about_give"]
         new_doc = {
             "profile_name": name_receive,
             "profile_info": about_receive
         }
         if 'file_give' in request.files:
+            #프로필 사진 파일 받기
             file = request.files["file_give"]
+            # 프로필 사진 파일 이름 받기
             filename = secure_filename(file.filename)
+            # 프로필 사진 파일 이름 '.'으로 분리 후 확장자명 extension 에 할당
             extension = filename.split(".")[-1]
+            # 해당 유저 이름으로 파일명 변경
             file_path = f"profile_pics/{username}.{extension}"
+            # static 폴더에 파일 저장
             file.save("./static/"+file_path)
+            # 파일 이름 업데이트
             new_doc["profile_pic"] = filename
+            # 파일 업데이트
             new_doc["profile_pic_real"] = file_path
+            # 해당 유저의 new_doc 업데이트
         db.users.update_one({'username': payload['id']}, {'$set':new_doc})
         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-      
+
       
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
