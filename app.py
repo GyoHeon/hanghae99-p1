@@ -11,53 +11,54 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
+# 암호화 키
 SECRET_KEY = 'SPARTA'
 
-#client = MongoClient('localhost', 27017)
 client = MongoClient('15.165.158.230', 27017, username="test", password="test")
-#client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.dbproject1
 
 
 # 메인페이지-챌린지 정보 주기__이교헌
 @app.route('/')
 def home():
+    # 로그인 정보 토큰 가져옴
     token_receive = request.cookies.get('mytoken')
     try:
+        # 토큰 디코드
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 토큰 id와 일치하는 정보
         user_info = db.users.find_one({"username": payload["id"]})
+        # 참여인원 수 내림차순으로 설정된 챌린지 목록
         challenges = db.chall.find({}, {"_id": False}).sort('participate', -1)
         return render_template('index.html', user_info=user_info, challenges=challenges)
+    # 로그인 안되는 경우
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
-@app.route('/login')
-def login():
-    msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
-
-
 # 로그인 - 이교헌
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
+    # 아이디 입력값
     username_receive = request.form['username_give']
+    # 비밀번호 입력값
     password_receive = request.form['password_give']
-
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
-    print(result)
+    # 비밀번호 입력값 암호화함
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    # id,pw 맞는 데이터 탐색
+    result = db.users.find_one({'username': username_receive, 'password': password_hash})
+    # 만약 맞는 데이터가 있으면 로그인
     if result is not None:
         payload = {
             'id': username_receive,
-            'exp': datetime.utcnow() + timedelta(seconds=60 * 60)  # 로그인 1시간 유지
+            # 로그인 1시간 유지
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
         return jsonify({'result': 'success', 'token': token})
-    # 찾지 못하면
+    # 맞는 데이터가 없으면 경고문 출력
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
@@ -65,18 +66,23 @@ def sign_in():
 # 회원가입 - 이교헌
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
+    # 아이디 입력값
     username_receive = request.form['username_give']
+    # 비밀번호 입력값
     password_receive = request.form['password_give']
+    # 비밀번호 입력값 암호화함
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    # 아이디, 비밀번호, 프로필 이름, 프로필 사진, 프로필 한마디, 참가한 챌린지(어레이) 저장
     doc = {
-        "username": username_receive,  # 아이디
-        "password": password_hash,  # 비밀번호
-        "profile_name": username_receive,  # 프로필 이름 기본값은 아이디
-        "profile_pic": "",  # 프로필 사진 파일 이름
-        "profile_pic_real": "profile_pics/profile_placeholder.png",  # 프로필 사진 기본 이미지
-        "profile_info": "",  # 프로필 한 마디
-        "profile_chall": []  # 참가한 챌린지
+        "username": username_receive,  
+        "password": password_hash,  
+        "profile_name": username_receive,
+        "profile_pic": "",
+        "profile_pic_real": "profile_pics/profile_placeholder.png",
+        "profile_info": "",
+        "profile_chall": []
     }
+    # DB에 저장
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
 
@@ -115,23 +121,17 @@ def detail(title_give):
 def posting():
     token_receive = request.cookies.get('mytoken')
     try:
-        #로그인된 jwt 토큰을 디코드하여 payload에 설정한다.#
+        # 로그인된 jwt 토큰을 디코드하여 payload에 설정한다.#
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        #로그인 정보를 토대로 user_info설정한다.#
+        # 로그인 정보를 토대로 user_info설정한다.#
         user_info = db.users.find_one({"username": payload["id"]})
-
-        #title_give로 가져온 값을 가져오면 그게 title_receive가 된다.#
+        # title_give로 가져온 값을 가져오면 그게 title_receive가 된다.#
         title_receive=request.form["title_give"]
-
-        #comment_give로 가져온 값을 가져오면 그게 commnet_receive가 된다.#
+        # comment_give로 가져온 값을 가져오면 그게 commnet_receive가 된다.#
         comment_receive = request.form["comment_give"]
-
-        #date_give로 가져온 값을 가져오면 그게 data_receive가 된다.#
+        # date_give로 가져온 값을 가져오면 그게 data_receive가 된다.#
         date_receive = request.form["date_give"]
-        
-        """ 아이디,프로필 닉네임, 프로필사진, 코멘트,
-        날짜, 참가한 챌린지 저장 """
+        # 아이디,프로필 닉네임, 프로필사진, 코멘트,날짜, 참가한 챌린지 저장
         doc = {
             "username": user_info["username"],
             "profile_name": user_info["profile_name"],
@@ -157,34 +157,25 @@ def my_chall():
     try:
         #로그인된 jwt 토큰을 디코드하여 payload에 설정한다.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        
         #로그인 정보를 토대로 user_info을 설정한다.
         user_info = db.users.find_one({"username": payload["id"]})
-
         #Profile_cahll_give로 가져온값을 가져오면 그게 profile_chall_receive가 된다.
         profile_chall_receive = request.form["profile_chall_give"]
-
         #해당하는 chall에 particiapte를 표현한다.
         participate = db.chall.find_one({"title":profile_chall_receive})["participate"]
-        
         #title로 데이터로 찾은 후 particiapte의 데이터에 +1을 추가한다.
         db.chall.update_one({'title':profile_chall_receive}, {'$inc':{'participate' : 1}})
-        
         #유저네임을 데이터로 찾은 후 profile_chall을 추가한다.
         db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
-        
         #성공시 포스팅 성공 출력
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
-        
         #실패시 home으로 이동
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
 
-# 마이페이지 렌더링 코드 - 이한울 2021/11/04
-# 참가한 챌린지 목록 끌고 오기
-# 마이페이지 렌더링 코드 - 이교헌 2021/11/05
-# 코멘트 넘겨서 성취도 확인
+# 마이페이지 렌더링 코드 - 이한울 2021/11/04, 이교헌 2021/11/05
+# 참가한 챌린지 목록 끌고 오기, 코멘트 넘겨서 성취도 확인
 @app.route('/myPage/<username>')
 def main(username):
     token_receive = request.cookies.get('mytoken')
