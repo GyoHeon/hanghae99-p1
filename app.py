@@ -115,11 +115,23 @@ def detail(title_give):
 def posting():
     token_receive = request.cookies.get('mytoken')
     try:
+        #로그인된 jwt 토큰을 디코드하여 payload에 설정한다.#
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+        #로그인 정보를 토대로 user_info설정한다.#
         user_info = db.users.find_one({"username": payload["id"]})
+
+        #title_give로 가져온 값을 가져오면 그게 title_receive가 된다.#
         title_receive=request.form["title_give"]
+
+        #comment_give로 가져온 값을 가져오면 그게 commnet_receive가 된다.#
         comment_receive = request.form["comment_give"]
+
+        #date_give로 가져온 값을 가져오면 그게 data_receive가 된다.#
         date_receive = request.form["date_give"]
+        
+        """ 아이디,프로필 닉네임, 프로필사진, 코멘트,
+        날짜, 참가한 챌린지 저장 """
         doc = {
             "username": user_info["username"],
             "profile_name": user_info["profile_name"],
@@ -130,11 +142,12 @@ def posting():
         }
         db.comment.insert_one(doc)                       #2중배열 인증글 db 입력
 
+    # 성공시 포스팅성공 출력
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
+
+    #실패시 home으로 이동.
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
-
 
 
 # 상세페이지 참가 db에 저장 - 이한울
@@ -142,13 +155,28 @@ def posting():
 def my_chall():
     token_receive = request.cookies.get('mytoken')
     try:
+        #로그인된 jwt 토큰을 디코드하여 payload에 설정한다.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        
+        #로그인 정보를 토대로 user_info을 설정한다.
         user_info = db.users.find_one({"username": payload["id"]})
+
+        #Profile_cahll_give로 가져온값을 가져오면 그게 profile_chall_receive가 된다.
         profile_chall_receive = request.form["profile_chall_give"]
+
+        #해당하는 chall에 particiapte를 표현한다.
         participate = db.chall.find_one({"title":profile_chall_receive})["participate"]
+        
+        #title로 데이터로 찾은 후 particiapte의 데이터에 +1을 추가한다.
         db.chall.update_one({'title':profile_chall_receive}, {'$inc':{'participate' : 1}})
+        
+        #유저네임을 데이터로 찾은 후 profile_chall을 추가한다.
         db.users.update_one({'username':user_info["username"]},{'$push':{'profile_chall':profile_chall_receive}})
+        
+        #성공시 포스팅 성공 출력
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
+        
+        #실패시 home으로 이동
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
