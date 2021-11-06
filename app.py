@@ -88,29 +88,48 @@ def sign_up():
 
 
 # 중복확인 - 이교헌
+#중복확인api
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
+    #유저 아이디정보 받음
     username_receive = request.form['username_give']
+    #해당 아이디 정보가 있으면 참,거짓으로 저장
     exists = bool(db.users.find_one({"username": username_receive}))
+    #결과값 보냄
     return jsonify({'result': 'success', 'exists': exists})
 
 
 # 상세페이지이동 - 이한울  2021/11/04
+#어떤 상세페이지 이동인지 알기위해 ajax에서 주는 title_give정보를 받아옴
 @app.route('/detail/<title_give>/')
+#외부정보인 title_give를 함수에 넣음
 def detail(title_give):
+    #로그인했을때 남은 쿠기정볼에 jwt토큰을 넣어서 보낸것을 받음
     token_receive = request.cookies.get('mytoken')
     try:
+        #jwt토큰을 아무나 수정할수 없게 미리지정해둔 비밀번호키와 알고리즘을 적용함
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        #user db의 모든정보를 찾음
         users = db.users.find({})
+        #로그인때 남은 id정보를 통해 username이 있는 행들을 찾음
         user_info = db.users.find_one({"username":payload["id"]})
-        username = user_info["username"]             #상세페이지에서 마이프로필 가기위한 username
+        #user_info에 담긴 db행에서 username정보를 가져옴
+        username = user_info["username"]
+        #user_info에 담긴 2중배열로 처리된 title정보들을 가져옴
         profile_chall = user_info["profile_chall"]
+        #외부에서 받아온 정보로 title을 찾음
         challenge = db.chall.find_one({"title": title_give}, {"_id": False})
+        #상세페이지 참여자 수 정보
         participate = challenge["participate"]
+        #상세페이지 이미지 url
         img = challenge["url"]
+        #상세페이지 설명
         desc = challenge["description"]
+        #상세페이지에 입력받은 댓글을 최신순으로 찾음
         comments = db.comment.find({"title":title_give}).sort("date", -1)
+        #페이지 렌더링할때 정보들을 같이 넘김
         return render_template('detail.html',title=title_give, img=img, desc=desc,comments=comments,username=username,participate=participate, profile_chall=profile_chall, users=users)
+    #jwt 만료시  home으로 리턴
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
