@@ -95,6 +95,7 @@ def detail(title_give):
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        users = db.users.find({})
         user_info = db.users.find_one({"username":payload["id"]})
         username = user_info["username"]             #상세페이지에서 마이프로필 가기위한 username
         profile_chall = user_info["profile_chall"]
@@ -103,8 +104,7 @@ def detail(title_give):
         img = challenge["url"]
         desc = challenge["description"]
         comments = db.comment.find({"title":title_give}).sort("date", -1)
-        profile_pics = user_info["profile_pic_real"]  # 디테일 가져다 쓰세요 <img class="is-rounded" src="{{ url_for('static', filename=profile_pics) }}">
-        return render_template('detail.html',title=title_give, img=img, desc=desc,comments=comments,username=username,participate=participate, profile_chall=profile_chall,profile_pics=profile_pics)
+        return render_template('detail.html',title=title_give, img=img, desc=desc,comments=comments,username=username,participate=participate, profile_chall=profile_chall, users=users)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -124,10 +124,11 @@ def posting():
             "username": user_info["username"],
             "profile_name": user_info["profile_name"],
             "profile_pic_real": user_info["profile_pic_real"],
-            "comment": [],
+            "comment": comment_receive,
             "date": date_receive,
+            "title": title_receive
         }
-        db.chall.insert_one(doc)                       #2중배열 인증글 db 입력
+        db.comment.insert_one(doc)                       #2중배열 인증글 db 입력
 
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -199,4 +200,4 @@ def save_img():
       
       
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
