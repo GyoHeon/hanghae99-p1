@@ -5,7 +5,6 @@ profile-body {
 }
 .profile-card {
   border: none;
-  width: 400px;
   position: relative;
   overflow: hidden;
   border-radius: 8px;
@@ -33,6 +32,8 @@ body {
   min-height: 105vh;
   height: 100%;
   color: black;
+  margin: 0;
+  padding-bottom: 50px;
 }
 profile-body {
   background: #28527a;
@@ -222,7 +223,7 @@ a {
 
 .my-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 .nav-title {
   font-size: 40px;
@@ -239,4 +240,23 @@ a {
   height: 70px;
   border-radius: 50%;
   background-color: aqua;
+}
+animation {
+  animation-name: rgy; /* 애니메이션 이름 */
+  animation-duration: 2s; /* 재생 시간 (실행속도) */
+  animation-timing-function: ease-in; /* 속도곡선타입 */
+  animation-direction: alternate; /* 진행 방향 */
+  animation-fill-mode: forwards; /* 종료 후 위치 */
+  animation-play-state: paused; /* 실행 or 정지 */
+}
+.card-hover {
+  transition: all 0.2s ease-in-out;
+}
+.card-hover:hover {
+  transform: scale(1.1);
+}
+.nav-name {
+  font-size: 30px;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
