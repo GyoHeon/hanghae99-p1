@@ -104,7 +104,6 @@
       </div>
     </div>
   </nav>
-  {% if title in profile_chall %}
   <div class="card detail-div">
     <div class="detail-title">
       <figure>
@@ -128,93 +127,32 @@
       <div class="content" id="mychall">{{ desc }}</div>
     </div>
   </div>
-
+  {% if title in profile_chall %}
   <div class="shot" id="shot_challenge">
     <h1>챌린지 인증하기</h1>
     <button class="button is-primary" onclick="post()">등록</button>
     <textarea id="chall_text" class="textarea is-primary" placeholder="챌린지 인증글을 남겨주세요"></textarea>
-    <table class="table is-striped is-narrow is-bordered ">
-      <thead>
-        <h1> 챌린지 인증</h1>
-      </thead>
-      {% set profile_pics = namespace(name='') %}
-      {% for comment in comments %}
-      {% for user in users.rewind() %}
-      {% if user.username == comment.username %}
-      {% set profile_pics.name = user.profile_pic_real %}
+    {% else %}
+    <div class="shot" id="shot_challenge">
       {% endif %}
-      {% endfor %}
-      <tr>
-        <td>
-          <img class="is-rounded" src="{{ url_for('static', filename = profile_pics.name) }}"
-            style="width: 50px; height:50px;border-radius:30% ">
+      <table class="table is-striped is-narrow is-bordered ">
+        <thead>
+          <h1> 챌린지 인증</h1>
+        </thead>
+        {% for comment in comments %}
+        <tr>
+          <td>
+            <img class="is-rounded" src="{{ url_for('static', filename = comment.profile_pic_real) }}"
+              style="width: 50px; height:50px;border-radius:30% ">
+            <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
+            <span style="font-size: 25px">{{comment.comment}}</span>
+          </td>
+        </tr>
+        {% endfor %}
 
-
-          <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
-          <span style="font-size: 25px">{{comment.comment}}</span>
-        </td>
-      </tr>
-      {% endfor %}
-
-    </table>
-  </div>
-
-  {% else %}
-  <div class="card detail-div">
-    <div class="detail-title">
-      <figure>
-        <img src="{{ img }}" alt="Placeholder image" class="detail-img" />
-      </figure>
-      <div class="title-text detail-people">
-        <h1>{{ title }}</h1>
-        <p>공식 챌린지</p>
-        <p>참가 인원 : {{participate}} 명</p>
-        <div id="btn-hide">
-          <button onclick="shot_report()" class="button entrance-btn">
-            참가하기
-          </button>
-        </div>
-        <div>
-          <button class="button is-danger btn-show is-hidden">
-            챌린지 참가 중
-          </button>
-        </div>
-      </div>
+      </table>
     </div>
 
-    <div class="detail-desc">
-      <h1>챌린지 설명</h1>
-      <div class="content" id="mychall">{{ desc }}</div>
-    </div>
-  </div>
-
-  <div class="shot" id="shot_challenge">
-    <table class="table is-striped is-narrow is-bordered ">
-      <thead>
-        <h1> 챌린지 인증</h1>
-      </thead>
-      {% set profile_pics = namespace(name='') %}
-      {% for comment in comments %}
-      {% for user in users.rewind() %}
-      {% if user.username == comment.username %}
-      {% set profile_pics.name = user.profile_pic_real %}
-      {% endif %}
-      {% endfor %}
-      <tr>
-        <td>
-          <img class="is-rounded" src="{{ url_for('static', filename = profile_pics.name) }}"
-            style="width: 50px; height:50px;border-radius:30% ">
-
-
-          <span style="font-size: 25px; font-weight: bold">{{comment.username}}</span>
-          <span style="font-size: 25px">{{comment.comment}}</span>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-
-  {% endif %}
 
 
 </body>
